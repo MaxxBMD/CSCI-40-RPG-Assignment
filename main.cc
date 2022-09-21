@@ -59,15 +59,23 @@ void print_world(size_t player_row, size_t player_col) {
 }
 
 void cutsceneTime() {
+	playerMode = cutscene;//currently does nothing. idk if it will
 
-	playerMode = cutscene;
 	clearscreen();
+
 	cout << "GIANT WALL OF TEXT HERE" << endl;
-	usleep(500'000);
+//	usleep(750'000);
+
 	cout << "press any key to continue" << endl;
-	//WARNING this breaks
-	playerMode = exploration;
+	int x = quick_read();//like cin >> x, but faster
+
+	//program does not proceed until player input.
+
+
+	return;//exits the function and resumes right where we were in main
+
 }
+
 
 
 int main() {
@@ -80,7 +88,7 @@ int main() {
 	show_cursor(false);
 
 
-	while (playerMode == exploration) {
+	while (true) {
 		int c = toupper(quick_read());
 		if (c == 'Q') break;
 		if (c == 'W' or c == UP_ARROW) row--;
@@ -104,7 +112,7 @@ int main() {
 		}
 		if (get_world_location(row, col) == 'A') {
 			cutsceneTime();
-			//WARNING this breaks
+			set_world_location(row, col, ' ');
 		}
 
 
