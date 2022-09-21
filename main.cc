@@ -60,10 +60,11 @@ void print_world(size_t player_row, size_t player_col) {
 }
 
 void cutsceneTime() {
+	clearscreen();
 	cout << "GIANT WALL OF TEXT HERE" << endl;
-	usleep(500'000 / FPS);
+	usleep(500'000);
 	cout << "press any key to continue" << endl;
-
+	//WARNING this breaks
 }
 
 
@@ -97,6 +98,12 @@ int main() {
 			movecursor(ROWS + 2, 0);
 			cout << "You picked up a radish!\n";
 		}
+		if (get_world_location(row, col) == 'A') {
+			cutsceneTime();
+			//WARNING this breaks
+		}
+
+
 		if (get_world_location(row, col) == 'z') {
 			movecursor(ROWS + 2, 0);
 			cout << "YOU WIN!!!!!!!!!^G^G^G\n";
