@@ -17,10 +17,10 @@ vector<string> world_map = {
 	"*        |      *      ",
 	"*        |      *      ",
 	"*        ---    *      ",
-	"*               *      ",
+	"* c             *      ",
 	"*               *******",
 	"*    -----            *",
-	"*                     *",
+	"*          A          *",
 	"*                     *",
 	"***********************",
 
@@ -28,7 +28,10 @@ vector<string> world_map = {
 
 };
 
+enum gameMode {exploration, combat, cutscene};
 
+
+//
 
 char get_world_location(size_t row, size_t col) {
 	if (row >= world_map.size()) return ' ';
@@ -54,6 +57,13 @@ void print_world(size_t player_row, size_t player_col) {
 		}
 		cout << endl;
 	}
+}
+
+void cutsceneTime() {
+	cout << "GIANT WALL OF TEXT HERE" << endl;
+	usleep(500'000 / FPS);
+	cout << "press any key to continue" << endl;
+
 }
 
 
