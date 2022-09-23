@@ -48,7 +48,7 @@ void combatMode(int &HP) {
 		}
 		cout << "the alien has " << enemyHP << "hp remaining\n";
 		cout << "the alien strikes\n";
-		newenemyDmg = combatRNG(enemyDmg);
+		newenemyDmg = combatRNG(enemyDmg);// same as above
 		HP -= newenemyDmg;
 		if (HP <= 0) {
 			break;
