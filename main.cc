@@ -29,6 +29,9 @@ vector<string> world_map = {
 };
 
 
+
+
+
 char get_world_location(size_t row, size_t col) {
 	if (row >= world_map.size()) return ' ';
 	if (col >= world_map.at(row).size()) return ' ';
@@ -58,17 +61,15 @@ void print_world(size_t player_row, size_t player_col) {
 
 
 void cutsceneTime(int cutsceneNum) {
-	//what if we also parse in a number or character, and have that correspond with a string? and so each string would correlate with a different cutscene?
-	/* 0 = default. (nothing)
+	//the int we take in determines what text is outputted
+	/* 0 = default
 	   1 = game intro
 
 	   */
-
 	clearscreen();
 
-
-
 	if (cutsceneNum == 1) {
+		//game intro
 		cout << "You wake up to the blaring ring of an alarm and a message broadcasting in a language of hoarse squeals and guttural noises you do not understand.\n";
 		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
 		cout << "Captured by alien invaders as you ran toward the evacuation site and thrown in a prison cell composed of lasers.\n";
@@ -79,20 +80,41 @@ void cutsceneTime(int cutsceneNum) {
 		cout << endl << "Use the arrow keys to reach the door and escape.\n";
 	}
 
+	//default
 	if (cutsceneNum == 0) {
 		cout << "this is the default cutscene. alien encounters will be done in their own function." << endl;
 	}
 
 	cout << "press any key to continue" << endl;
 	int x = quick_read();//like cin >> x, but faster
-
 	//program does not proceed until player input.
-
 
 	return;//exits the function and resumes right where we were in main
 
 }
 
+void combatTime() {
+
+	clearscreen();
+
+	cout << "aaawaga" << endl;
+	int x = quick_read();
+
+	int i = 0;
+	while (x != 1) {
+		cout << "press 1" << endl;
+		cin >> x;
+		//this is an infinite loop!
+
+		i++;
+		if (i >= 100) break;
+		//failsafe to prevent infinite loop is kicking in at least
+	}
+
+
+
+	return;
+}
 
 
 int main() {
@@ -126,11 +148,15 @@ int main() {
 			movecursor(ROWS + 2, 0);
 			cout << "You picked up a radish!\n";
 		}
+
+		//alien
 		if (get_world_location(row, col) == 'A') {
+			//combatTime(); //does not currently work properly
 			cutsceneTime(0);
 			set_world_location(row, col, ' ');
 		}
 
+		//the tile with '1' on it is where the player spawns, so they get the cutscene as soon as they start
 		if (get_world_location(row, col) == '1') {
 			cutsceneTime(1);
 			set_world_location(row, col, ' ');
