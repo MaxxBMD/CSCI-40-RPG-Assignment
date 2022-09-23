@@ -16,17 +16,17 @@ using namespace std;
 
 //global variables go here:
 vector<string> world_map = {
-	"*****************      ",
-	"*        |      *      ",
-	"*        |      *      ",
-	"*        |      *      ",
-	"*        ---    *      ",
-	"* c        1    *      ",
-	"*               *******",
-	"*    -----            *",
-	"*          A          *",
-	"*                     *",
-	"***********************",
+	"-----------------      ",
+	"|        |      |      ",
+	"|        |      |      ",
+	"|        |      |      ",
+	"|        ---    |      ",
+	"| c        i    |      ",
+	"|               -------",
+	"|    -----            1",
+	"|          A          1",
+	"|                     1",
+	"-----------------------",
 
 
 
@@ -62,7 +62,7 @@ void print_world(size_t player_row, size_t player_col) {
 
 
 
-void cutsceneTime(int cutsceneNum) {
+void cutsceneTime(char cutsceneNum) {
 	//the int we take in determines what text is outputted
 	/* 0 = default
 	   1 = game intro
@@ -70,7 +70,7 @@ void cutsceneTime(int cutsceneNum) {
 	   */
 	clearscreen();
 
-	if (cutsceneNum == 1) {
+	if (cutsceneNum == 'i') {
 		//game intro
 		cout << "You wake up to the blaring ring of an alarm and a message broadcasting in a language of hoarse squeals and guttural noises you do not understand.\n";
 		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
@@ -83,7 +83,7 @@ void cutsceneTime(int cutsceneNum) {
 	}
 
 	//default
-	if (cutsceneNum == 0) {
+	if (cutsceneNum == 'a') {
 		cout << "this is the default cutscene. alien encounters will be done in their own function." << endl;
 	}
 
@@ -160,15 +160,14 @@ int main() {
 
 		//alien
 		if (get_world_location(row, col) == 'A') {
-			combatTime(); //does not currently work properly
-			//cutsceneTime(0);
+			combatTime(); //unfinished
 			print_world(row, col);
 			set_world_location(row, col, ' ');
 		}
 
 		//the tile with '1' on it is where the player spawns, so they get the cutscene as soon as they start
-		if (get_world_location(row, col) == '1') {
-			cutsceneTime(1);
+		if (get_world_location(row, col) == 'i') {
+			cutsceneTime('i');
 			set_world_location(row, col, ' ');
 		}
 
