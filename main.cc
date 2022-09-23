@@ -10,6 +10,10 @@
 
 using namespace std;
 
+//TODO make enum to store maps
+
+
+
 //global variables go here:
 vector<string> world_map = {
 	"*****************      ",
@@ -28,6 +32,54 @@ vector<string> world_map = {
 
 };
 
+
+vector<vector<string>> testMap00 = {
+	{"w", "w", "w", "w", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", "w", "w", "w", "w"},
+
+};
+
+
+
+//how do we make a 2D map like this work with our current toolset???? TODO
+
+//currently, the main map is a set of 1-dimensional strings layered on top of eachother.
+//what I want is a 2d vector where each tile is a string.
+//then, convert each string into a char and render that.
+//but then also have functions that can get the STRING tile we're on to analyze what it's really seeing.
+//is this even possibe?
+//is this necessary?
+
+
+//---------------------------------------
+/*	fair warning: i have no idea what i'm doing
+
+
+	string getTileStr()
+		-take in (x,y) coordinate positions
+
+		-lookup position on string map to determine what the string is
+
+		-output what string that's supposed to be
+
+	char whatChar(string str)
+
+		-use a case thing to lookup what char that string is supposed to be
+		-output corresponding char
+			-have an error case if not recognized. (like a '?' or a '$')
+
+
+	-something to print current map to the screen that isn't just main.
+		-uses whatChar(getTileStr(x,y))
+	--------------
+	to lookup current char player is on, use whatChar(getTileStr(x,y))
+-----------------------------------------------------------------------------
+   */
 
 char get_world_location(size_t row, size_t col) {
 	if (row >= world_map.size()) return ' ';
@@ -58,17 +110,15 @@ void print_world(size_t player_row, size_t player_col) {
 
 
 void cutsceneTime(int cutsceneNum) {
-	//what if we also parse in a number or character, and have that correspond with a string? and so each string would correlate with a different cutscene?
-	/* 0 = default. (nothing)
+	//the int we take in determines what text is outputted
+	/* 0 = default
 	   1 = game intro
 
 	   */
-
 	clearscreen();
 
-
-
 	if (cutsceneNum == 1) {
+		//game intro
 		cout << "You wake up to the blaring ring of an alarm and a message broadcasting in a language of hoarse squeals and guttural noises you do not understand.\n";
 		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
 		cout << "Captured by alien invaders as you ran toward the evacuation site and thrown in a prison cell composed of lasers.\n";
@@ -79,20 +129,45 @@ void cutsceneTime(int cutsceneNum) {
 		cout << endl << "Use the arrow keys to reach the door and escape.\n";
 	}
 
+	//default
 	if (cutsceneNum == 0) {
 		cout << "this is the default cutscene. alien encounters will be done in their own function." << endl;
 	}
 
 	cout << "press any key to continue" << endl;
 	int x = quick_read();//like cin >> x, but faster
-
 	//program does not proceed until player input.
-
 
 	return;//exits the function and resumes right where we were in main
 
 }
 
+void combatTime() {
+	set_raw_mode(false);
+	clearscreen();
+
+	cout << "aaawaga" << endl;
+	string x = "";
+	cin >> x;
+
+	int i = 0;
+	while (x != "autowin") {
+		cout << "type autowin to end the battle" << endl;
+		cin >> x; //make this a getline
+		/*	possible actual inputs:
+			-melee / knife / [weapon name]
+			-ranged / gun / blaster / [weapon name]
+			-flee / whatever
+			-autowin (only a temp for debug)
+		*/
+
+		i++;
+		if (i >= 100) break;
+		//failsafe to prevent infinite loop is kicking in at least
+	}
+	set_raw_mode(true);
+	return;
+}
 
 
 int main() {
@@ -104,6 +179,20 @@ int main() {
 	set_raw_mode(true);
 	show_cursor(false);
 
+	/* TODO
+
+	   -make multiple maps
+	   	-if player goes over a certain tile, change maps and adjust position
+
+	   -new tile system, so door1/door2/door3 all render as 'd', for instance
+	   	-possible options:
+			-vector that contains variables?? is that possible? maybe vector of strings that sync with names instead??
+
+		-player inventory + screen
+
+
+	   */
+
 	while (true) {
 		int c = toupper(quick_read());
 		if (c == 'Q') break;
@@ -111,6 +200,7 @@ int main() {
 		if (c == 'S' or c == DOWN_ARROW) row++;
 		if (c == 'A' or c == LEFT_ARROW) col--;
 		if (c == 'D' or c == RIGHT_ARROW) col++;
+		//if (c == 'i') checkInventory(); //this function does not exist. just a temp for when inventory is added.
 		if (!(row == last_row and col == last_col)) { //If we moved...
 			print_world(row, col); //...redraw the map
 			last_row = row;
@@ -126,11 +216,16 @@ int main() {
 			movecursor(ROWS + 2, 0);
 			cout << "You picked up a radish!\n";
 		}
+
+		//alien
 		if (get_world_location(row, col) == 'A') {
-			cutsceneTime(0);
+			combatTime(); //does not currently work properly
+			//cutsceneTime(0);
+			print_world(row, col);
 			set_world_location(row, col, ' ');
 		}
 
+		//the tile with '1' on it is where the player spawns, so they get the cutscene as soon as they start
 		if (get_world_location(row, col) == '1') {
 			cutsceneTime(1);
 			set_world_location(row, col, ' ');
