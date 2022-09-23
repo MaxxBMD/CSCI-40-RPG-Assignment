@@ -1,5 +1,5 @@
 //Fill out this comment with your names and which bullet points you did
-//Partners: Ayden Messick,
+//Partners: Herbart Hernandez, Rene Hernandez, Ayden Messick, Allesandra Orozco-Newton, Brandon Sam
 //Bullet Points:
 //Extra Credit:
 //URL to cover art and music:
