@@ -33,59 +33,12 @@ vector<string> world_map = {
 };
 
 
-vector<vector<string>> testMap00 = {
-	{"w", "w", "w", "w", "w"},
-	{"w", " ", " ", " ", "w"},
-	{"w", " ", " ", " ", "w"},
-	{"w", " ", " ", " ", "w"},
-	{"w", " ", " ", " ", "w"},
-	{"w", " ", " ", " ", "w"},
-	{"w", "w", "w", "w", "w"},
-
-};
-
-
-
-//how do we make a 2D map like this work with our current toolset???? TODO
-
-//currently, the main map is a set of 1-dimensional strings layered on top of eachother.
-//what I want is a 2d vector where each tile is a string.
-//then, convert each string into a char and render that.
-//but then also have functions that can get the STRING tile we're on to analyze what it's really seeing.
-//is this even possibe?
-//is this necessary?
-
-
-//---------------------------------------
-/*	fair warning: i have no idea what i'm doing
-
-
-	string getTileStr()
-		-take in (x,y) coordinate positions
-
-		-lookup position on string map to determine what the string is
-
-		-output what string that's supposed to be
-
-	char whatChar(string str)
-
-		-use a case thing to lookup what char that string is supposed to be
-		-output corresponding char
-			-have an error case if not recognized. (like a '?' or a '$')
-
-
-	-something to print current map to the screen that isn't just main.
-		-uses whatChar(getTileStr(x,y))
-	--------------
-	to lookup current char player is on, use whatChar(getTileStr(x,y))
------------------------------------------------------------------------------
-   */
-
 char get_world_location(size_t row, size_t col) {
 	if (row >= world_map.size()) return ' ';
 	if (col >= world_map.at(row).size()) return ' ';
 	return world_map.at(row).at(col);
 }
+
 
 void set_world_location(size_t row, size_t col, char c) {
 	if (row >= world_map.size()) return;
@@ -179,19 +132,7 @@ int main() {
 	set_raw_mode(true);
 	show_cursor(false);
 
-	/* TODO
 
-	   -make multiple maps
-	   	-if player goes over a certain tile, change maps and adjust position
-
-	   -new tile system, so door1/door2/door3 all render as 'd', for instance
-	   	-possible options:
-			-vector that contains variables?? is that possible? maybe vector of strings that sync with names instead??
-
-		-player inventory + screen
-
-
-	   */
 
 	while (true) {
 		int c = toupper(quick_read());
