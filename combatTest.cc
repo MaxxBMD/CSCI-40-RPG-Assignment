@@ -32,25 +32,29 @@ int combatRNG(int dmg){
 void combatMode(int &HP) {
 	int playerDmg = 15;
 	int enemyDmg = 15;
-//	int newPlayerDmg = combatRNG(playerDmg);
-//	int newEnemyDmg = combatRNG(enemyDmg);
+	int newplayerDmg = playerDmg;
+	int newenemyDmg = enemyDmg;
 	int enemyHP = 100;
 	string action;
 	cout << "you have encoutered a Alien uh oh\n";
 	while ((HP > 0) && (enemyHP > 0)) {
 		cout << "you strike\n";
-		enemyHP -= combatRNG(playerDmg);//player dmg affects alien hp
-		cout << "you do " << combatRNG(playerDmg) << " damage to the alien\n";
+		newplayerDmg = combatRNG(playerDmg);//holds the random value
+		enemyHP -= newplayerDmg;//player dmg affects alien hp
+		cout << "you do " << newplayerDmg << " damage to the alien\n";
+		newplayerDmg = playerDmg;// resets the random value to the deafault dmg
 		if (enemyHP<=0){
 			break;
 		}
 		cout << "the alien has " << enemyHP << "hp remaining\n";
 		cout << "the alien strikes\n";
-		HP -= combatRNG(enemyDmg);	
+		newenemyDmg = combatRNG(enemyDmg);
+		HP -= newenemyDmg;
 		if (HP <= 0) {
 			break;
 		}
-		cout << "you take " << combatRNG(enemyDmg) << " damage\n";
+		cout << "you take " << newenemyDmg << " damage\n";
+		newenemyDmg = enemyDmg;
 		cout << "you have " << HP << "hp remaining\n";
 		cout << "attempt to flee by pressing q or any other key to continue\n";
 		cin >> action;
