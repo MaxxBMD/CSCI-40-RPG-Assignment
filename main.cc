@@ -18,13 +18,13 @@ using namespace std;
 vector<string> world_map = {
 	"-----------------      ",
 	"|        |      |      ",
-	"|        |      |      ",
+	"|        | H    |      ",
 	"|        |      |      ",
 	"|        ---    |      ",
 	"| c        i    |      ",
 	"|               -------",
 	"|    -----            1",
-	"|          A          1",
+	"|          A       z  1",
 	"|                     1",
 	"-----------------------",
 
@@ -122,6 +122,77 @@ void combatTime() {
 	return;
 }
 
+void die() {
+	cout << "BAD INPUT" << endl;
+	exit(1);
+}
+
+int combatRNG(int dmg) {
+	int y = rand() % 10;
+	if (y < 2)
+		return (dmg + (dmg * 0.3));//20% crit of +30% damage
+	else if (y < 3)
+		return (dmg = 0);//10% miss rate
+	// all part of simple damage deviation so basiccaly rest is 70%
+	if (y < 4)
+		return (dmg + 2);
+
+	if (y < 5)
+		return (dmg - 5);
+
+	if (y < 6)
+		return (dmg + 7);
+
+	if (y < 6)
+		return (dmg + -2);
+
+	if (y < 9)
+		return (dmg + 4);
+	else
+		return (0);
+}
+
+void combatMode(int &HP) {
+	int playerDmg = 15;
+	int enemyDmg = 15;
+	int newplayerDmg = playerDmg;
+	int newenemyDmg = enemyDmg;
+	int enemyHP = 100;
+	string action;
+	cout << "you have encoutered a Alien uh oh\n";
+	while ((HP > 0) && (enemyHP > 0)) {
+		cout << "you strike\n";
+		newplayerDmg = combatRNG(playerDmg);//holds the random value
+		enemyHP -= newplayerDmg;//player dmg affects alien hp
+		cout << "you do " << newplayerDmg << " damage to the alien\n";
+		newplayerDmg = playerDmg;// resets the random value to the deafault dmg
+		if (enemyHP <= 0) {
+			break;
+		}
+		cout << "the alien has " << enemyHP << "hp remaining\n";
+		cout << "the alien strikes\n";
+		newenemyDmg = combatRNG(enemyDmg);
+		HP -= newenemyDmg;
+		if (HP <= 0) {
+			break;
+		}
+		cout << "you take " << newenemyDmg << " damage\n";
+		newenemyDmg = enemyDmg;
+		cout << "you have " << HP << "hp remaining\n";
+		cout << "attempt to flee by pressing q or any other key to continue\n";
+		cin >> action;
+		if (action == "q") {
+			break;
+		}
+	}
+	if (HP <= 0) {
+		cout << "you died rip \n";
+		exit(0);
+	} else if (enemyHP <= 0) {
+		cout << " you killed the alien good job\n";
+		return;
+	}
+}
 
 int main() {
 	const int ROWS = world_map.size();
@@ -132,6 +203,8 @@ int main() {
 	set_raw_mode(true);
 	show_cursor(false);
 
+	srand(time(NULL));
+	int HP = 100; //player health
 
 
 	while (true) {
@@ -160,18 +233,38 @@ int main() {
 
 		//alien
 		if (get_world_location(row, col) == 'A') {
-			combatTime(); //unfinished
+			movecursor(ROWS + 2, 0);
+			combatMode(HP);
+
+
 			print_world(row, col);
 			set_world_location(row, col, ' ');
 		}
 
-		//the tile with '1' on it is where the player spawns, so they get the cutscene as soon as they start
+		//intro cutscene
 		if (get_world_location(row, col) == 'i') {
 			cutsceneTime('i');
 			set_world_location(row, col, ' ');
 		}
 
+		//health pickup
+		if (get_world_location(row, col) == 'H') {
+			//	healing(HP);
+			if (HP < 100) {
+				HP += 15;
+				if (HP > 100) {
+					HP = 100;
+				}
+				set_world_location(row, col, ' ');
+				movecursor(ROWS + 2, 0);
+				cout << "You found a health pack. HP is now " << HP << "." << endl;
 
+			}
+		}
+
+
+
+		//end
 		if (get_world_location(row, col) == 'z') {
 			movecursor(ROWS + 2, 0);
 			cout << "YOU WIN!!!!!!!!!^G^G^G\n";
