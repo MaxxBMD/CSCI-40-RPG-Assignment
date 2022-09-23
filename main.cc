@@ -10,6 +10,10 @@
 
 using namespace std;
 
+//TODO make enum to store maps
+
+
+
 //global variables go here:
 vector<string> world_map = {
 	"*****************      ",
@@ -40,9 +44,21 @@ vector<vector<string>> testMap00 = {
 
 };
 
-/*
 
-  	TODO make these functions:
+
+//how do we make a 2D map like this work with our current toolset???? TODO
+
+//currently, the main map is a set of 1-dimensional strings layered on top of eachother.
+//what I want is a 2d vector where each tile is a string.
+//then, convert each string into a char and render that.
+//but then also have functions that can get the STRING tile we're on to analyze what it's really seeing.
+//is this even possibe?
+//is this necessary?
+
+
+//---------------------------------------
+/*	fair warning: i have no idea what i'm doing
+
 
 	string getTileStr()
 		-take in (x,y) coordinate positions
@@ -57,26 +73,13 @@ vector<vector<string>> testMap00 = {
 		-output corresponding char
 			-have an error case if not recognized. (like a '?' or a '$')
 
+
+	-something to print current map to the screen that isn't just main.
+		-uses whatChar(getTileStr(x,y))
 	--------------
 	to lookup current char player is on, use whatChar(getTileStr(x,y))
-
-
-
-
-
-
-
-
+-----------------------------------------------------------------------------
    */
-
-
-
-
-
-
-
-
-
 
 char get_world_location(size_t row, size_t col) {
 	if (row >= world_map.size()) return ' ';
@@ -151,26 +154,18 @@ void combatTime() {
 	while (x != "autowin") {
 		cout << "type autowin to end the battle" << endl;
 		cin >> x; //make this a getline
-		//this part is just for debugging.
-
 		/*	possible actual inputs:
 			-melee / knife / [weapon name]
 			-ranged / gun / blaster / [weapon name]
 			-flee / whatever
-
 			-autowin (only a temp for debug)
-
-
 		*/
 
 		i++;
 		if (i >= 100) break;
 		//failsafe to prevent infinite loop is kicking in at least
 	}
-
-
 	set_raw_mode(true);
-
 	return;
 }
 
@@ -185,8 +180,6 @@ int main() {
 	show_cursor(false);
 
 	/* TODO
-	   -make drawing the game world into a global function
-	   	-this might requrire making a lot of other things global
 
 	   -make multiple maps
 	   	-if player goes over a certain tile, change maps and adjust position
