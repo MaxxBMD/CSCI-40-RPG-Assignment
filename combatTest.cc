@@ -3,7 +3,7 @@
 using namespace std;
 
 
-int combatRNG(int dmg){
+int combatRNG(int dmg) {
 	int	y = rand() % 10;
 	if (y < 2)
 		return (dmg + (dmg * 0.3));//20% crit of +30% damage
@@ -22,10 +22,10 @@ int combatRNG(int dmg){
 	if (y < 6)
 		return (dmg + -2);
 
-	if (y <9)
+	if (y < 9)
 		return (dmg + 4);
 	else
-		return(0);
+		return (0);
 }
 
 
@@ -43,7 +43,7 @@ void combatMode(int &HP) {
 		enemyHP -= newplayerDmg;//player dmg affects alien hp
 		cout << "you do " << newplayerDmg << " damage to the alien\n";
 		newplayerDmg = playerDmg;// resets the random value to the deafault dmg
-		if (enemyHP<=0){
+		if (enemyHP <= 0) {
 			break;
 		}
 		cout << "the alien has " << enemyHP << "hp remaining\n";
@@ -60,16 +60,15 @@ void combatMode(int &HP) {
 		cin >> action;
 		if (action == "q") {
 			break;
-		}		
+		}
 	}
 	if (HP <= 0) {
 		cout << "you died rip \n";
 		exit(0);
-		}
-	else if (enemyHP <= 0) {
+	} else if (enemyHP <= 0) {
 		cout << " you killed the alien good job\n";
 		return;
-		}
+	}
 }
 
 int main() {
