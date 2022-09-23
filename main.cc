@@ -29,6 +29,52 @@ vector<string> world_map = {
 };
 
 
+vector<vector<string>> testMap00 = {
+	{"w", "w", "w", "w", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", " ", " ", " ", "w"},
+	{"w", "w", "w", "w", "w"},
+
+};
+
+/*
+
+  	TODO make these functions:
+
+	string getTileStr()
+		-take in (x,y) coordinate positions
+
+		-lookup position on string map to determine what the string is
+
+		-output what string that's supposed to be
+
+	char whatChar(string str)
+
+		-use a case thing to lookup what char that string is supposed to be
+		-output corresponding char
+			-have an error case if not recognized. (like a '?' or a '$')
+
+	--------------
+	to lookup current char player is on, use whatChar(getTileStr(x,y))
+
+
+
+
+
+
+
+
+   */
+
+
+
+
+
+
+
 
 
 
