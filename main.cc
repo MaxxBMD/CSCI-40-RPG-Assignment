@@ -1,5 +1,5 @@
 //Fill out this comment with your names and which bullet points you did
-//Partners: Ayden Messick,
+//Partners: Herbart Hernandez, Rene Hernandez, Ayden Messick, Allesandra Orozco-Newton, Brandon Sam
 //Bullet Points:
 //Extra Credit:
 //URL to cover art and music:
@@ -17,7 +17,7 @@ vector<string> world_map = {
 	"*        |      *      ",
 	"*        |      *      ",
 	"*        ---    *      ",
-	"* c             *      ",
+	"* c        1    *      ",
 	"*               *******",
 	"*    -----            *",
 	"*          A          *",
@@ -28,10 +28,6 @@ vector<string> world_map = {
 
 };
 
-enum gameMode {exploration, combat, cutscene};
-
-
-//
 
 char get_world_location(size_t row, size_t col) {
 	if (row >= world_map.size()) return ' ';
@@ -59,12 +55,44 @@ void print_world(size_t player_row, size_t player_col) {
 	}
 }
 
-void cutsceneTime() {
-	cout << "GIANT WALL OF TEXT HERE" << endl;
-	usleep(500'000 / FPS);
+
+
+void cutsceneTime(int cutsceneNum) {
+	//what if we also parse in a number or character, and have that correspond with a string? and so each string would correlate with a different cutscene?
+	/* 0 = default. (nothing)
+	   1 = game intro
+
+	   */
+
+	clearscreen();
+
+
+
+	if (cutsceneNum == 1) {
+		cout << "You wake up to the blaring ring of an alarm and a message broadcasting in a language of hoarse squeals and guttural noises you do not understand.\n";
+		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
+		cout << "Captured by alien invaders as you ran toward the evacuation site and thrown in a prison cell composed of lasers.\n";
+		cout << "Lasers that scorched right through the strands of hair you ripped from your head and placed in their path to learn just how hopeless your situation was.\n";
+		cout << "As the memories come back, you hear the buzz of the lasers begin to fade away. You open your eyes to see your cage has disappeared.\n";
+		cout << "The alarm message must be something about a power outage. You don’t take more than a couple seconds to decide you must seize this opportunity.\n";
+		cout << "You begin to walk toward the door that you presume leads you out of this prison.\n";
+		cout << endl << "Use the arrow keys to reach the door and escape.\n";
+	}
+
+	if (cutsceneNum == 0) {
+		cout << "this is the default cutscene. alien encounters will be done in their own function." << endl;
+	}
+
 	cout << "press any key to continue" << endl;
+	int x = quick_read();//like cin >> x, but faster
+
+	//program does not proceed until player input.
+
+
+	return;//exits the function and resumes right where we were in main
 
 }
+
 
 
 int main() {
@@ -75,6 +103,7 @@ int main() {
 	int last_row = -1, last_col = -1; //Save our last position so we only redraw on update
 	set_raw_mode(true);
 	show_cursor(false);
+
 	while (true) {
 		int c = toupper(quick_read());
 		if (c == 'Q') break;
@@ -97,6 +126,17 @@ int main() {
 			movecursor(ROWS + 2, 0);
 			cout << "You picked up a radish!\n";
 		}
+		if (get_world_location(row, col) == 'A') {
+			cutsceneTime(0);
+			set_world_location(row, col, ' ');
+		}
+
+		if (get_world_location(row, col) == '1') {
+			cutsceneTime(1);
+			set_world_location(row, col, ' ');
+		}
+
+
 		if (get_world_location(row, col) == 'z') {
 			movecursor(ROWS + 2, 0);
 			cout << "YOU WIN!!!!!!!!!^G^G^G\n";
