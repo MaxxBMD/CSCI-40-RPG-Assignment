@@ -94,17 +94,28 @@ void cutsceneTime(int cutsceneNum) {
 }
 
 void combatTime() {
-
+	set_raw_mode(false);
 	clearscreen();
 
 	cout << "aaawaga" << endl;
-	int x = quick_read();
+	string x = "";
+	cin >> x;
 
 	int i = 0;
-	while (x != 1) {
-		cout << "press 1" << endl;
-		cin >> x;
-		//this is an infinite loop!
+	while (x != "autowin") {
+		cout << "type autowin to end the battle" << endl;
+		cin >> x; //make this a getline
+		//this part is just for debugging.
+
+		/*	possible actual inputs:
+			-melee / knife / [weapon name]
+			-ranged / gun / blaster / [weapon name]
+			-flee / whatever
+
+			-autowin (only a temp for debug)
+
+
+		*/
 
 		i++;
 		if (i >= 100) break;
@@ -112,6 +123,7 @@ void combatTime() {
 	}
 
 
+	set_raw_mode(true);
 
 	return;
 }
@@ -126,6 +138,22 @@ int main() {
 	set_raw_mode(true);
 	show_cursor(false);
 
+	/* TODO
+	   -make drawing the game world into a global function
+	   	-this might requrire making a lot of other things global
+
+	   -make multiple maps
+	   	-if player goes over a certain tile, change maps and adjust position
+
+	   -new tile system, so door1/door2/door3 all render as 'd', for instance
+	   	-possible options:
+			-vector that contains variables?? is that possible? maybe vector of strings that sync with names instead??
+
+		-player inventory + screen
+
+
+	   */
+
 	while (true) {
 		int c = toupper(quick_read());
 		if (c == 'Q') break;
@@ -133,6 +161,7 @@ int main() {
 		if (c == 'S' or c == DOWN_ARROW) row++;
 		if (c == 'A' or c == LEFT_ARROW) col--;
 		if (c == 'D' or c == RIGHT_ARROW) col++;
+		//if (c == 'i') checkInventory(); //this function does not exist. just a temp for when inventory is added.
 		if (!(row == last_row and col == last_col)) { //If we moved...
 			print_world(row, col); //...redraw the map
 			last_row = row;
@@ -151,8 +180,9 @@ int main() {
 
 		//alien
 		if (get_world_location(row, col) == 'A') {
-			//combatTime(); //does not currently work properly
-			cutsceneTime(0);
+			combatTime(); //does not currently work properly
+			//cutsceneTime(0);
+			print_world(row, col);
 			set_world_location(row, col, ' ');
 		}
 
