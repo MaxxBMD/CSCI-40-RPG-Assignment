@@ -57,20 +57,25 @@ void print_map(const map_t &map, int player_row, int player_col) {
 	for (int i = 0; i < map.size(); i++) {
 		for (int j = 0; j < map.at(0).size(); j++) {
 			//traverses the entire array using two loops
-
 			if (i == player_row && j == player_col) {
 				//if we are on the player's position, draw an @
 				cout << '@' << " " << RESET;;
 			} else {
 				//otherwise, set a color based on what tile we're looking at...
-				if (map.at(i).at(j) == '*')
+				switch (map.at(i).at(j)) {
+				case '*':
 					cout << RED;
-				if (map.at(i).at(j) == 'T')
+					break;
+				case 'T':
 					cout << GREEN;
-				if (map.at(i).at(j) == 'R')
+					break;
+				case 'R':
 					cout << YELLOW;
-				if (map.at(i).at(j) == 'B')
+					break;
+				case 'B':
 					cout << CYAN;
+					break;
+				}
 				//...and then draw that tile (then reset color)
 				cout << map.at(i).at(j) << " " << RESET;
 			}
@@ -212,9 +217,9 @@ int main() {
 			print_map(map2, row, col); //...redraw the map
 			last_row = row;
 			last_col = col;
-			movecursor(2, COLS + 5);
-			cout << BLUE << "ROW: " << row << RED << " COL: " << col << RESET;
-			movecursor(ROWS + 2, 0);
+			movecursor(0, 0);
+			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET;
+			movecursor(ROWS + 3, 0);
 			cout << "Welcome to the game\n";
 			//cout.flush();
 		}
