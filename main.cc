@@ -153,6 +153,10 @@ int combatRNG(int dmg) {
 }
 
 void combatMode(int &HP) {
+	clearscreen();
+	show_cursor(true);
+	set_raw_mode(false);
+
 	int playerDmg = 15;
 	int enemyDmg = 15;
 	int newplayerDmg = playerDmg;
@@ -163,6 +167,7 @@ void combatMode(int &HP) {
 	while ((HP > 0) && (enemyHP > 0)) {
 		cout << "you strike\n";
 		newplayerDmg = combatRNG(playerDmg);//holds the random value
+
 		enemyHP -= newplayerDmg;//player dmg affects alien hp
 		cout << "you do ";
 		cout << RED << newplayerDmg;
@@ -209,6 +214,8 @@ void combatMode(int &HP) {
 		return;
 	}
 	resetcolor();
+	show_cursor(false);
+	set_raw_mode(true);
 }
 
 int main() {
