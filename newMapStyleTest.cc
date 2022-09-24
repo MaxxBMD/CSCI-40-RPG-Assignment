@@ -11,9 +11,10 @@
 
 using namespace std;
 using map_t = vector<vector<char>>;
-
-
 //global variables go here:
+
+
+//this map is not currently used
 vector<string> world_map = {
 	"-----------------      ",
 	"|        |      |      ",
@@ -51,33 +52,37 @@ const int COLS = map2.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BA
 
 void print_map(const map_t &map, int player_row, int player_col) {
 	clearscreen();
-	movecursor(0, 0);
+	movecursor(3, 0);//offset from top left
 
+	for (int i = 0; i < map.size(); i++) {
+		for (int j = 0; j < map.at(0).size(); j++) {
+			//traverses the entire array using two loops
 
-
-	for (const auto& row : map) {  //Call by Const Reference
-		for (const auto col : row) { //Call by Value
-
-			if (row.size() == player_row && col == player_col) {
-			//col is beyond comparison. help!
-
-				cout << '@' << " " << RESET;
-
+			if (i == player_row && j == player_col) {
+				//if we are on the player's position, draw an @
+				cout << '@' << " " << RESET;;
 			} else {
-				if (col == '*')
+				//otherwise, set a color based on what tile we're looking at...
+				if (map.at(i).at(j) == '*')
 					cout << RED;
-				if (col == 'T')
+				if (map.at(i).at(j) == 'T')
 					cout << GREEN;
-				if (col == 'R')
+				if (map.at(i).at(j) == 'R')
 					cout << YELLOW;
-				if (col == 'B')
+				if (map.at(i).at(j) == 'B')
 					cout << CYAN;
-				cout << col << " " << RESET;
+				//...and then draw that tile (then reset color)
+				cout << map.at(i).at(j) << " " << RESET;
 			}
 		}
-		cout << endl;
+		cout << endl;//end of the row
 	}
+
+
 }
+
+
+
 //save_map(map1,"map1.txt");
 void save_map(const map_t& map, const string& filename) {
 	//Learning Point #1: How to open a file for writing
