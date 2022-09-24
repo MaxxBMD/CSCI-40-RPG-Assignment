@@ -161,7 +161,7 @@ void combatMode(int &HP) {
 	int enemyDmg = 15;
 	int newplayerDmg = playerDmg;
 	int newenemyDmg = enemyDmg;
-	int enemyHP = 100;
+	int enemyHP = 65;
 	string action;
 	cout << "you have encoutered a Alien uh oh\n";
 	while ((HP > 0) && (enemyHP > 0)) {
@@ -211,11 +211,12 @@ void combatMode(int &HP) {
 		exit(0);
 	} else if (enemyHP <= 0) {
 		cout << " you killed the alien good job\n";
-		return;
+		//	return;
 	}
 	resetcolor();
 	show_cursor(false);
 	set_raw_mode(true);
+	return;
 }
 
 int main() {
@@ -247,7 +248,7 @@ int main() {
 			cout << BLUE << "ROW: " << row << RED << " COL: " << col << RESET;
 			movecursor(ROWS + 2, 0);
 			cout << "Welcome to the game\n";
-			cout.flush();
+			//cout.flush();
 		}
 		if (get_world_location(row, col) == 'r') {
 			set_world_location(row, col, ' ');
