@@ -162,6 +162,7 @@ void combatMode(int &HP) {
 	int newplayerDmg = playerDmg;
 	int newenemyDmg = enemyDmg;
 	int enemyHP = 65;
+	int 
 	string action;
 	cout << "you have encoutered a Alien uh oh\n";
 	while ((HP > 0) && (enemyHP > 0)) {
@@ -211,8 +212,9 @@ void combatMode(int &HP) {
 		exit(0);
 	} else if (enemyHP <= 0) {
 		cout << " you killed the alien good job\n";
-		//	return;
+			cout << "Back to exploring!" << endl;
 	}
+
 	resetcolor();
 	show_cursor(false);
 	set_raw_mode(true);
@@ -282,12 +284,11 @@ int main() {
 				}
 				set_world_location(row, col, ' ');
 				movecursor(ROWS + 2, 0);
-				cout << "You found a health pack. HP is now " << HP << "." << endl;
+				cout << "CONGRATULATIONS! You found a health pack!❤️ " << endl;
+				cout << " HP is now " << HP << "." << endl;
 
 			}
 		}
-
-
 
 		//end
 		if (get_world_location(row, col) == 'z') {
