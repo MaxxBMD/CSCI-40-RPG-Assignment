@@ -164,21 +164,37 @@ void combatMode(int &HP) {
 		cout << "you strike\n";
 		newplayerDmg = combatRNG(playerDmg);//holds the random value
 		enemyHP -= newplayerDmg;//player dmg affects alien hp
-		cout << "you do " << newplayerDmg << " damage to the alien\n";
+		cout << "you do ";
+		cout << RED << newplayerDmg;
+		resetcolor();
+		cout << " damage to the alien\n";
 		newplayerDmg = playerDmg;// resets the random value to the deafault dmg
 		if (enemyHP <= 0) {
 			break;
 		}
-		cout << "the alien has " << enemyHP << "hp remaining\n";
+		cout << "the alien has ";
+		cout << GREEN << enemyHP;
+		resetcolor();
+		cout << " hp remaining\n";
+
 		cout << "the alien strikes\n";
 		newenemyDmg = combatRNG(enemyDmg);
 		HP -= newenemyDmg;
 		if (HP <= 0) {
 			break;
 		}
-		cout << "you take " << newenemyDmg << " damage\n";
+		cout << "you take ";
+		cout << RED << newenemyDmg;
+		resetcolor();
+		cout << " damage\n";
+
 		newenemyDmg = enemyDmg;
-		cout << "you have " << HP << "hp remaining\n";
+		cout << "you have ";
+		cout << GREEN << HP;
+		resetcolor();
+		cout << " hp remaining\n";
+
+
 		cout << "attempt to flee by pressing q or any other key to continue\n";
 		cin >> action;
 		if (action == "q") {
@@ -192,6 +208,7 @@ void combatMode(int &HP) {
 		cout << " you killed the alien good job\n";
 		return;
 	}
+	resetcolor();
 }
 
 int main() {
