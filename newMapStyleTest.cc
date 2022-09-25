@@ -33,7 +33,7 @@ vector<string> world_map = {
 //TODO: find a way to use usleep to eliminate the flickering!
 
 
-map_t map2 = {
+map_t map0 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '1'},
 	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
@@ -48,7 +48,7 @@ map_t map2 = {
 
 
 
-map_t map3 = {
+map_t map1 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
 	{'0', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
@@ -63,12 +63,12 @@ map_t map3 = {
 
 
 
-vector<map_t> theMaps{map2, map3};
+vector<map_t> theMaps{map0, map1};
 int currentMap = 0;
 
 
-const int ROWS = map2.size();
-const int COLS = map2.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BAD TIMES
+const int ROWS = map0.size();
+const int COLS = map0.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BAD TIMES
 //hmmm, this could cause problems down the line if we're using this on multiple maps with multiple sizes
 
 
@@ -184,8 +184,31 @@ void set_world_location(size_t row, size_t col, char c) {
 	if (row >= theMaps.at(currentMap).size()) return;
 	if (col >= theMaps.at(currentMap).at(row).size()) return;
 
-	map2.at(row).at(col) = c;
+	theMaps.at(currentMap).at(row).at(col) = c;
 }
+
+
+void switchMap(int i) {
+	assert(i >= 0 && i < theMaps.size());
+
+
+	/*
+	   have a bunch of if statements here
+	   currentMap is the old room
+	   i is the new room
+
+	   if (currentMap is 0 and i is 1, teleport the player HERE.)
+
+
+	   */
+
+	//have a thing here to reset the rows and collumns?
+}
+
+
+
+
+
 
 int main() {
 	const int FPS = 60;
@@ -218,6 +241,7 @@ int main() {
 
 			switch (get_world_location(row, col)) {
 			case '*':
+				//comment out this whole case to disable collision
 				row = last_row;
 				col = last_col;
 				tileStr = "can't go there.";
