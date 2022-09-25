@@ -31,9 +31,11 @@ vector<string> world_map = {
 };
 
 
+
+
 map_t map2 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', ' '},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '1'},
 	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
@@ -46,8 +48,28 @@ map_t map2 = {
 
 
 
+map_t map3 = {
+	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
+	{'0', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', 'T', 'T', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', 'T', 'T', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
+	{'*', ' ', ' ', ' ', '*', '*', ' ', ' ', ' ', '*'},
+	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
+};
+
+
+
+vector<map_t> theMaps{map2, map3};
+int currentMap = 0;
+
+
 const int ROWS = map2.size();
 const int COLS = map2.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BAD TIMES
+//hmmm, this could cause problems down the line if we're using this on multiple maps with multiple sizes
 
 
 void print_map(const map_t &map, int player_row, int player_col) {
@@ -75,21 +97,36 @@ void print_map(const map_t &map, int player_row, int player_col) {
 				case 'B':
 					cout << CYAN;
 					break;
+				case '0':
+					cout << CYAN;
+					break;
+				case '1':
+					cout << CYAN;
+					break;
+				case '2':
+					cout << CYAN;
+					break;
+				case '3':
+					cout << CYAN;
+					break;
+				case '4':
+					cout << CYAN;
+					break;
 				}
 				//...and then draw that tile (then reset color)
 				cout << map.at(i).at(j) << " " << RESET;
 			}
 		}
 		cout << endl;//end of the row
+
 	}
-
-
 }
 
 
 
+
 //save_map(map1,"map1.txt");
-void save_map(const map_t& map, const string& filename) {
+void save_map(const map_t & map, const string & filename) {
 	//Learning Point #1: How to open a file for writing
 	//If the file exists, it is truncated (erased and set to 0 size)
 	//If the file doesn't exist, it is created
@@ -108,7 +145,7 @@ void save_map(const map_t& map, const string& filename) {
 }
 
 //map_t map3 = load_map("map3.txt");
-map_t load_map(const string& filename) {
+map_t load_map(const string & filename) {
 	//Learing Point #2: How to open a file for reading
 	ifstream lemon(filename);
 	if (!lemon) {
@@ -135,37 +172,18 @@ map_t load_map(const string& filename) {
 
 
 
-
-
-
 char get_world_location(size_t row, size_t col) {
-	if (row >= map2.size()) return ' ';
-	if (col >= map2.at(row).size()) return ' ';
-	return map2.at(row).at(col);
+	if (row >= theMaps.at(currentMap).size()) return ' ';
+	if (col >= theMaps.at(currentMap).at(row).size()) return ' ';
+	return theMaps.at(currentMap).at(row).at(col);
 }
 
 
 void set_world_location(size_t row, size_t col, char c) {
-	if (row >= map2.size()) return;
-	if (col >= map2.at(row).size()) return;
+	if (row >= theMaps.at(currentMap).size()) return;
+	if (col >= theMaps.at(currentMap).at(row).size()) return;
 
 	map2.at(row).at(col) = c;
-}
-
-void print_world(size_t player_row, size_t player_col) {
-	clearscreen();
-	movecursor(0, 0);
-//	print_map(map2);
-	for (size_t row = 0; row < map2.size(); row++) {
-		for (size_t col = 0; col < map2.at(row).size(); col++) {
-			if (row == player_row && col == player_col) cout << "@";
-
-			else
-				cout << map2.at(row).at(col);
-
-		}
-		cout << endl;
-	}
 }
 
 int main() {
@@ -178,34 +196,10 @@ int main() {
 	srand(time(NULL));
 	int HP = 100; //player health
 
-	//=============================
-
-	map_t map1(ROWS, vector<char>(COLS));
-
-	for (vector<char>& row : map1) {  //Call by Const Reference
-		for (char& col : row) { //Call by Reference
-			int roll = rand() % 10;
-			if (roll < 4) //30% chance
-				col = ' ';
-			else if (roll < 7) //30% chance
-				col = '*';
-			else if (roll < 8) //10% chance
-				col = 'T';
-			else if (roll < 9) //10% chance
-				col = 'R';
-			else
-				col = 'B';
-		}
-	}
-
-
-
-
-
-	//============================
-
+	string tileStr = "default text";
 
 	while (true) {
+		tileStr = "default text";
 		int c = toupper(quick_read());
 		if (c == 'Q') break;
 		if (c == 'W' or c == UP_ARROW) row--;
@@ -214,14 +208,44 @@ int main() {
 		if (c == 'D' or c == RIGHT_ARROW) col++;
 		//if (c == 'i') checkInventory(); //this function does not exist. just a temp for when inventory is added.
 		if (!(row == last_row and col == last_col)) { //If we moved...
-			print_map(map2, row, col); //...redraw the map
+
+			switch (get_world_location(row, col)) {
+			case '*':
+				tileStr = "wall";
+				break;
+
+			case 'T':
+				tileStr = "some Ts";
+			//	set_world_location(row, col, ' '); //does not work. will need to directly edit the map instead??
+				break;
+			case '0':
+				currentMap = 0;
+				tileStr = "teleported to map 0!";
+				break;
+			case '1':
+				currentMap = 1;
+				tileStr = "teleported to map 1!";
+				break;
+
+
+
+
+			}
+
+
+
+			print_map(theMaps.at(currentMap), row, col); //...redraw the map
 			last_row = row;
 			last_col = col;
 			movecursor(0, 0);
 			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET;
 			movecursor(ROWS + 3, 0);
-			cout << "Welcome to the game\n";
-			//cout.flush();
+			cout << tileStr << endl;
+			cout.flush();
+
+
+
+
 		}
 	}
 	set_raw_mode(false);
