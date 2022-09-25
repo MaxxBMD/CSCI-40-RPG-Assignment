@@ -30,7 +30,7 @@ vector<string> world_map = {
 
 };
 
-
+//TODO: find a way to use usleep to eliminate the flickering!
 
 
 map_t map2 = {
@@ -73,6 +73,7 @@ const int COLS = map2.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BA
 
 
 void print_map(const map_t &map, int player_row, int player_col) {
+
 	clearscreen();
 	movecursor(3, 0);//offset from top left
 
@@ -198,6 +199,12 @@ int main() {
 
 	string tileStr = "default text";
 
+	row = 1;
+	col = 1;
+
+
+
+
 	while (true) {
 		tileStr = "default text";
 		int c = toupper(quick_read());
@@ -211,37 +218,39 @@ int main() {
 
 			switch (get_world_location(row, col)) {
 			case '*':
-				tileStr = "wall";
+				row = last_row;
+				col = last_col;
+				tileStr = "can't go there.";
 				break;
 
 			case 'T':
 				tileStr = "some Ts";
-			//	set_world_location(row, col, ' '); //does not work. will need to directly edit the map instead??
+				//	set_world_location(row, col, ' '); //does not work. will need to directly edit the map instead??
 				break;
 			case '0':
 				currentMap = 0;
+				row = 1;
+				col = 8;
 				tileStr = "teleported to map 0!";
 				break;
 			case '1':
 				currentMap = 1;
+				row = 1;
+				col = 1;
 				tileStr = "teleported to map 1!";
 				break;
-
-
-
-
 			}
 
-
-
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
+
 			last_row = row;
 			last_col = col;
 			movecursor(0, 0);
-			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET;
+			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET << " MAP: " << currentMap;
 			movecursor(ROWS + 3, 0);
 			cout << tileStr << endl;
 			cout.flush();
+
 
 
 
