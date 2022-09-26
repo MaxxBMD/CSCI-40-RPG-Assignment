@@ -22,35 +22,35 @@ map_t map0 = {
 	{'*', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', '*'},
 	{'*', '*', '*', '*', ' ', '*', 'i', ' ', ' ', '*'},
 	{'*', ' ', ' ', '*', ' ', '*', '*', '*', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'*', ' ', ' ', ' ', ' ', ' ', 'r', ' ', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
 map_t map1 = {
-	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// storage room
-	{'0', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},// part 2
-	{'*', ' ', '*', ' ', '*', ' ', '*', '*', 'P', '*'},
+	{'*', '*', '*', '*', '*', '*', '*', '*', '2', '*'},// storage room
+	{'0', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', '*'},// part 2
+	{'*', 'A', '*', ' ', '*', ' ', '*', '*', 'P', '*'},
 	{'*', ' ', '*', ' ', '*', 'A', '*', '*', ' ', '*'},
-	{'*', ' ', 'A', ' ', ' ', ' ', '*', ' ', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', ' ', '*', 'A', ' ', '*'},
+	{'*', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '*'},
+	{'*', ' ', '*', ' ', '*', 'A', '*', ' ', 'A', '*'},
 	{'*', ' ', '*', ' ', '*', ' ', '*', ' ', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', 'A', ' ', ' ', ' ', 'H', '*', ' ', '*'},
-	{'*', '*', '*', '*', '*', '*', '*', '*', ' ', '2'},
+	{'*', ' ', '*', 'A', '*', ' ', '*', '*', ' ', '*'},
+	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
 };
 
 
 
 map_t map2 = {
-    {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// main hall
-    {'*', '*', '*', '*', '*', '*', '*', ' ', ' ', '*'},// part 3
-    {'*', 'P', '*', '*', 'A', ' ', ' ', ' ', 'H', '*'},
-    {'*', ' ', ' ', ' ', ' ', ' ', '*', 'A', ' ', '*'},
-    {'*', 'H', ' ', '*', ' ', 'A', '*', ' ', ' ', '*'},
-    {'*', ' ', ' ', '*', 'H', ' ', '*', '*', ' ', '*'},
-    {'*', 'A', ' ', '*', 'A', ' ', '*', '*', ' ', '*'},
-    {'*', '*', 'H', '*', '*', 'A', '*', '*', ' ', '*'},
-    {'*', '*', 'A', '*', '*', 'H', '*', '*', ' ', ' '},
-    {'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
+	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// main hall
+	{'*', ' ', '*', '*', '*', '*', '*', ' ', ' ', '*'},// part 3
+	{'*', ' ', '*', '*', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'*', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '*'},
+	{'*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', '*'},
+	{'3', ' ', ' ', '*', ' ', ' ', '*', '*', ' ', '*'},
+	{'*', ' ', ' ', '*', ' ', ' ', '*', '*', ' ', '*'},
+	{'*', '*', ' ', '*', '*', ' ', '*', '*', ' ', '*'},
+	{'*', '*', ' ', '*', '*', ' ', '*', '*', ' ', '*'},
+	{'*', '*', '*', '*', '*', '*', '*', '*', '1', '*'},
 };
 
 
@@ -59,24 +59,24 @@ map_t map3 = {
 	{'*', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},// part 4
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'4', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '2'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
-	{'*', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
 map_t map4 = {
-	{' ', ' ', ' ', ' ', '*', '*', ' ', ' ', ' ', ' '},// the command center
-	{' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' '},// part 5
-	{' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' '},
-	{' ', ' ', '*', ' ', 'A', 'A', ' ', '*', ' ', ' '},
-	{' ', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', ' '},
-	{' ', '*', 'A', ' ', ' ', ' ', ' ', 'A', '*', ' '},
-	{'*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', '*'},
-	{'*', ' ', ' ', '*', 'A', 'A', '*', ' ', ' ', '*'},
-	{'6', 'P', 'H', '*', ' ', ' ', '*', ' ', 'H', '*'},
-	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
+	{' ', ' ', ' ', ' ', ' ', '*', '*', '*', '*', '*'},// the command center
+	{' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},// part 5
+	{' ', ' ', ' ', '*', 'A', ' ', ' ', 'A', 'H', '*'},
+	{' ', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
+	{'*', 'P', 'A', ' ', ' ', '*', ' ', ' ', ' ', '3'},
+	{'*', ' ', 'A', ' ', ' ', '*', 'A', ' ', ' ', '*'},
+	{' ', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
+	{' ', ' ', ' ', '*', ' ', ' ', ' ', '*', ' ', '*'},
+	{' ', ' ', ' ', ' ', '*', 'A', ' ', '|', ' ', '*'},
+	{' ', ' ', ' ', ' ', ' ', '*', '*', '*', '5', '*'}
 };
 vector<map_t> theMaps{map0, map1, map2, map3, map4};
 int currentMap = 0;
@@ -110,23 +110,17 @@ void print_map(const map_t &map, int player_row, int player_col) {
 					//alien
 					setcolor(20, 0, 21);
 					break;
+				case 'r':
 				case 'i':
 					//ammo
 					cout << YELLOW;
 					break;
 				case '0':
-					cout << CYAN;
-					break;
 				case '1':
-					cout << CYAN;
-					break;
 				case '2':
-					cout << CYAN;
-					break;
 				case '3':
-					cout << CYAN;
-					break;
 				case '4':
+				case '5':
 					cout << CYAN;
 					break;
 				}
@@ -156,16 +150,14 @@ void set_world_location(size_t row, size_t col, char c) {
 
 
 
-void cutsceneTime(char cutsceneNum) {
-	//the int we take in determines what text is outputted
-	/* 0 = default
-	   1 = game intro
-	   2 = finale
+void cutsceneTime(int cutsceneNum) {
+	//cutscene 1 - intro
+	//cutscene 2 - outro
 
-	   */
 	clearscreen();
+	movecursor(0, 0);
 
-	if (cutsceneNum == 'i') {
+	if (cutsceneNum == 1) {
 		//game intro
 		cout << "You wake up to the blaring ring of an alarm and a message broadcasting in a language of hoarse squeals and guttural noises you do not understand.\n";
 		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
@@ -177,14 +169,18 @@ void cutsceneTime(char cutsceneNum) {
 		cout << endl << "Use the arrow keys to reach the door and escape.\n";
 	}
 
-	//default
-	if (cutsceneNum == 'a') {
-		cout << "this is the default cutscene. alien encounters will be done in their own function." << endl;
+	else if (cutsceneNum == 2) {
+		clearscreen();
+		cout << "You escaped. The world around you is unfamiliar. This is not earth." << endl;
+		cout << "THE END" << endl;
+		exit(0);
 	}
+
 
 	cout << "press any key to continue" << endl;
 	int x = quick_read();//like cin >> x, but faster
 	//program does not proceed until player input.
+
 
 	return;//exits the function and resumes right where we were in main
 
@@ -204,7 +200,7 @@ void Combat_mode(int& HP) {
 	clearscreen();
 	show_cursor(true);
 	set_raw_mode(false);
-	int enemyHP = 100;
+	int enemyHP = 85;
 
 
 	//possible todo: vectors of strings. each containing dialogue lines for the same action. pick one at random.
@@ -219,6 +215,7 @@ void Combat_mode(int& HP) {
 
 
 	movecursor(0, 0);
+	cout << attackOpener.at(randDialogue);
 	while ((HP > 0) && (enemyHP > 0)) {
 		srand(time(NULL));
 		int rand1 = (rand() % 40) + 20;;
@@ -238,7 +235,6 @@ void Combat_mode(int& HP) {
 		resetcolor();
 
 
-		cout << attackOpener.at(randDialogue);
 
 		cout << "What will you do?\nMELEE - 1\t RANGED(" << gunAmmo <<  ") - 2" << endl;
 		usleep(100000);
@@ -410,15 +406,14 @@ int main() {
 	row = 1;
 	col = 1;
 
+	cutsceneTime(1);
+
 	while (true) {
 		tileStr = "default text";
 
 
 
-		if (HP < 30) tileStr = "it hurts...";
-
-
-
+		if (HP < 30) tileStr = "it hurts.";
 
 
 		int c = toupper(quick_read());
@@ -442,36 +437,49 @@ int main() {
 				currentMap = 0;
 				row = 1;
 				col = 8;
-				tileStr = "Now in map 0!";
+				tileStr = "Guess this is the ship's brig.";
 				break;
 			case '1':
 				if (currentMap == 0) {
 					row = 1;
 					col = 1;
 				} else if (currentMap == 2) {
-					row = 8;
+					row = 1;
 					col = 8;
 				}
 				currentMap = 1;
-				tileStr = "Now in map 1!";
+				tileStr = "This looks like a storage area.";
 				break;
 			case '2':
 				if (currentMap == 1) {
-					row = 1;
+					row = 8;
+					col = 8;
+				} else if (currentMap == 3) {
+					row = 5;
 					col = 1;
 				}
 				currentMap = 2;
 				tileStr = "Now in map 2";
 				break;
 			case '3':
-
+				if (currentMap == 2) {
+					row = 5;
+					col = 8;
+				} else if (currentMap == 4) {
+					row = 4;
+					col = 1;
+				}
 				currentMap = 3;
 				tileStr = "Now in map 3";
 				break;
 			case '4':
-
+				row = 4;
+				col = 8;
 				currentMap = 4;
 				tileStr = "Now in map 4";
+				break;
+			case '5':
+				cutsceneTime(2);
 				break;
 			case 'i':
 				//ammo
@@ -495,17 +503,12 @@ int main() {
 				}
 
 				if (HP >= 100) {
-					tileStr =  "Health is already at maxed";
+					tileStr =  "You find a health pack.\nThankfully, you don't need one right now.";
 					HP = 100;
 				}
 				break;
-			case 'B':
-				tileStr = "You picked up a baseball bat!";
-				set_world_location(row, col, ' ');
-				break;
-
-			case 'G':
-				tileStr = "You picked up a alien blaster!";
+			case 'r':
+				tileStr = "There's an alien blaster on the ground. You pick it up.\nStay strapped or get clapped, as they say.";
 				set_world_location(row, col, ' ');
 				break;
 			case 'P':
