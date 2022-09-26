@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-
+#include <cctype>
 using namespace std;
 using map_t = vector<vector<char>>;
 
@@ -44,7 +44,7 @@ map_t map2 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// main hall
 	{'*', ' ', '*', '*', '*', '*', '*', ' ', ' ', '*'},// part 3
 	{'*', ' ', '*', '*', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '*'},
+	{'*', ' ', ' ', 'P', ' ', ' ', '*', ' ', ' ', '*'},
 	{'*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', '*'},
 	{'3', ' ', ' ', '*', ' ', ' ', '*', '*', ' ', '*'},
 	{'*', ' ', ' ', '*', ' ', ' ', '*', '*', ' ', '*'},
@@ -62,7 +62,7 @@ map_t map3 = {
 	{'4', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '2'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', 'P', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
@@ -173,6 +173,8 @@ void cutsceneTime(int cutsceneNum) {
 		clearscreen();
 		cout << "You escaped. The world around you is unfamiliar. This is not earth." << endl;
 		cout << "THE END" << endl;
+		set_raw_mode(true);
+		show_cursor(true);
 		exit(0);
 	}
 
@@ -336,6 +338,15 @@ void Combat_mode(int& HP) {
 
 }
 
+
+//this is for the last puzzle
+vector<bool> lightBoard {0, 0, 0};
+void toggleLight(int i) {
+	if (lightBoard.at(i) == true) lightBoard.at(i) = false;
+	else if (lightBoard.at(i) == false) lightBoard.at(i) = true;
+}
+
+
 int puzzleNum = 1;
 void puzzle() {
 
@@ -348,7 +359,6 @@ void puzzle() {
 		while (true) {
 			getline(cin, prompt);
 			if (prompt == "You are my lucky star" || prompt == "you are my lucky star") {
-				cout << "Access granted\n";
 				break;
 			} else {
 				cout << "Hmm, no, that wasn't it.\n Something about, no, a lucky star?" << endl;
@@ -362,7 +372,6 @@ void puzzle() {
 			getline(cin, prompt);
 			if (prompt == "1938") {
 				break;
-				cout << "Access granted\n";
 			} else {
 				cout << "Access denied.\n";
 			}
@@ -370,22 +379,86 @@ void puzzle() {
 	}
 
 	if (puzzleNum == 3) {
-		cout << "wowhododkljdfasdfkjlekhellokjfasbruhdk\nTranslation:\nALIEN - XENOMORPH\n2001 - [translation error]\nSTARSHIP TROOPERS - ARRACHNIDS\nDISTRICT 9 - ______";
+		cout << "wowhododkljdfasdfkjlekhellokjfasbruhdk\nTranslation:\nALIEN - XENOMORPH\n2001 - [translation error]\nSTARSHIP TROOPERS - ARACHNIDS\nDISTRICT 9 - ";
 		while (true) {
 			getline(cin, prompt);
-			if (prompt == "prawns" || prompt == "Prawns") {
+			if (prompt == "prawns" || prompt == "Prawns" || prompt == "PRAWNS") {
 				break;
-				cout << "Access granted\n";
 			} else {
-				cout << "Access denied.\n";
+				cout << "Access Denied\n";
 			}
 		}
 
 	}
+	if (puzzleNum == 4) {
+
+		cout << "As you pass through the place, you notice that the writing on one of these whiteboard-like things kind of looks like math.\nYou realize that potentially being the first person to perfom Alien Math is too good of a chance to pass up." << endl;
+		cout << "  |\\\n";
+		cout << "  | \\\n";
+		cout << "12|  \\[__]\n";
+		cout << "  |   \\\n";
+		cout << "  |    \\\n";
+		cout << "  -------\n";
+		cout << "     5\n";
+
+		int pyTher = 0;
+		while (true) {
+			cin >> pyTher;
+
+			if (pyTher == 13) {
+				break;
+			} else {
+				cout << "No, that doesn't seem right...\nIt looks like the pythagorean theorem.\n";
+			}
+		}
+	}
+
+	if (puzzleNum == 5) {
+		cout << "Before you is a large terminal. It appears to be able to control everything on the ship.\nMost of it has been damaged by the crash, but some of it remains intact.\nOff to the side is a series of buttons and lights\n.";
+
+
+		char buttons = '0';
+
+		while (true) {
+			cout << "{ ";
+			for (int i = 0; i < lightBoard.size(); ++i) {
+				cout << lightBoard.at(i) << " ";
+			}
+			cin >> buttons;
+			cout << "}" << endl;
+
+			if (buttons == '1') {
+				toggleLight(0);
+				toggleLight(2);
+			}
+			if (buttons == '2') {
+				toggleLight(0);
+				toggleLight(1);
+
+			}
+			if (buttons == '3') {
+				toggleLight(1);
+				toggleLight(2);
+			}
+
+
+			int sum = 0;
+			for (int i = 0; i < lightBoard.size(); ++i)
+				sum += lightBoard.at(i);
+
+			if (sum >= lightBoard.size()) break;
+		}
+
+	}
+
+
 	clearscreen();
 	show_cursor(false);
 	set_raw_mode(true);
 }
+
+
+
 
 
 
