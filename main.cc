@@ -27,7 +27,7 @@ map_t map0 = {
 };
 map_t map1 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '2', '*'},// storage room
-	{'0', ' ', ' ', ' ', ' ', ' ', ' ', '*', ' ', '*'},// part 2
+	{'0', ' ', ' ', ' ', ' ', ' ', 'H', '*', ' ', '*'},// part 2
 	{'*', 'A', '*', ' ', '*', ' ', '*', '*', 'P', '*'},
 	{'*', ' ', '*', ' ', '*', 'A', '*', '*', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', '*', ' ', ' ', '*'},
@@ -47,7 +47,7 @@ map_t map2 = {
 	{'*', ' ', ' ', 'A', '*', ' ', ' ', ' ', ' ', '*'},
 	{'*', 'A', ' ', ' ', 'P', ' ', 'A', ' ', ' ', '*'},
 	{'3', ' ', ' ', ' ', '*', 'A', ' ', 'A', ' ', '*'},
-	{'*', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
+	{'*', 'i', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
 	{'*', '*', 'A', ' ', '*', 'A', ' ', '*', ' ', '*'},
 	{'*', '*', ' ', '*', '*', '*', ' ', '*', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '1', '*'},
@@ -167,6 +167,7 @@ void cutsceneTime(int cutsceneNum) {
 		cout << "The alarm message must be something about a power outage. You don’t take more than a couple seconds to decide you must seize this opportunity.\n";
 		cout << "You begin to walk toward the door that you presume leads you out of this prison.\n";
 		cout << endl << "Use the arrow keys to reach the door and escape.\n";
+		sleep(2);
 	}
 
 	else if (cutsceneNum == 2) {
@@ -197,6 +198,22 @@ void die() {
 
 int gunAmmo = 0;
 
+
+int randDialogue() {
+	int theRand = ((rand() / 100) % 4);
+	if (theRand == 4)
+		return 4;
+	else if (theRand == 3)
+		return 3;
+	else if (theRand == 2)
+		return 2;
+	else return 1;
+	//1-4
+
+
+
+}
+
 void Combat_mode(int& HP) {
 
 	clearscreen();
@@ -208,18 +225,17 @@ void Combat_mode(int& HP) {
 	//possible todo: vectors of strings. each containing dialogue lines for the same action. pick one at random.
 
 
-	int randDialogue = 0;
 
-	vector<string> attackLinesMelee{"You attack the alien.", "You swing your knife at the alien.", "You thrust your knife fowards, aiming directly for the alien."};
-	vector<string> attackLinesRange{"You fire your blaster at the alien.", "You fire a shot at the alien.", "A bolt of blasma shoots out of your blaster towards the alien."};
-	vector<string> attackOpener{"Suddenly, an alien reveals itself before you!", "Our of nowhere, an alien jumps out at you!", "Suddenly, you trip and fall. Turns out, an alien was camoflaged underneath you!", "The floor and walls before you begin shifting. It's an alien!"};
-
-
-
+	vector<string> attackLinesMelee{"You attack the alien.", "You swing your knife at the alien.", "You thrust your knife fowards, aiming directly for the alien.", "You strike the alien."};
+	vector<string> attackLinesRange{"You fire your blaster at the alien.", "You fire a shot at the alien.", "A bolt of blasma shoots out of your blaster towards the alien.", "You pull the trigger on your blaster"};
+	vector<string> attackOpener{"Suddenly, an alien reveals itself before you!", "Out of nowhere, an alien jumps out at you!", "Suddenly, you trip and fall. Turns out, an alien was camoflaged underneath you!", "The floor and walls before you begin shifting. It's an alien!"};
 
 	movecursor(0, 0);
-	cout << attackOpener.at(randDialogue);
+	cout << attackOpener.at(randDialogue()) << endl;;
 	while ((HP > 0) && (enemyHP > 0)) {
+
+
+
 		srand(time(NULL));
 		int rand1 = (rand() % 40) + 20;;
 		int rand2 = (rand() % 30) + 10;
@@ -251,7 +267,7 @@ void Combat_mode(int& HP) {
 
 		if (playerChoice == '1') {
 			//melee
-			cout << "You strike the alien\n";
+			cout << attackLinesMelee.at(randDialogue());
 			newplayerDmg = alien_blaster; //holds the random value
 
 			enemyHP -= newplayerDmg;//player dmg affects alien hp
@@ -266,6 +282,7 @@ void Combat_mode(int& HP) {
 				newplayerDmg = alien_blaster + 30; //holds the random value
 				gunAmmo--;
 
+				cout << attackLinesRange.at(randDialogue()) << endl;
 				enemyHP -= newplayerDmg;//player dmg affects alien hp
 				cout << "You do: " << CYAN << alien_blaster;
 				resetcolor();
