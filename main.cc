@@ -35,8 +35,8 @@ vector<string> world_map = {
 
 map_t map0 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
-	{'*', ' ', '*', 'A', ' ', 'i', 'A', '*', ' ', '1'},
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', 'T', ' ', '*'},
+	{'*', ' ', '*', 'A', ' ', 'i', 'A', '*', 'P', '1'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', 'B', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
@@ -325,6 +325,57 @@ void Combat_mode(int& HP) {
 
 }
 
+void puzzle(int puzzleNum, int &key) {
+
+	clearscreen();
+	show_cursor(true);
+	set_raw_mode(false);
+	string prompt;
+    if (puzzleNum == 1) {
+        cout << "Damn just got some deja vu \nThis reminds me of when Ripley was sneaking around the escape shuttle before fighting xenomorph...\nWhat was that song she sang during that battle? Something about a star?\n";
+        while (key != 1) {
+            getline(cin, prompt);
+            if (prompt == "You are my lucky star" || prompt == "you are my lucky star") { 
+                cout << "Access granted\n";
+				key = 1;//passed test
+            }
+            else {
+                cout << "Access denied\n Try again\n";
+            }
+        }
+    }
+
+    if (puzzleNum == 2) {
+        cout << "dalkjfkldsjafjklsadfjsdlafdkljdlaf\n Translation:When was the first war of worlds?\n";
+        while (key != 1) {
+            getline(cin, prompt);
+            if (prompt == "1938") {
+                key = 1;
+                cout << "Access granted\n";
+            } else {
+                cout << "Access denied\n Try again\n";
+            }
+        }
+    }
+
+    if (puzzleNum == 3) {
+        cout << "wowhododkljdfasdfkjlekhellokjfasbruhdk\n Translation:In Alien we have Xenomorph\nIn Avater we have The Na'vi\nIn Starship Troopers we Arachnids\n In District 9 we have...";
+        while (key != 1) {
+            getline(cin, prompt);
+            if (prompt == "prawns" || prompt == "Prawns") {
+                key = 1;
+                cout << "Access granted\n";
+            } else {
+                cout << "Access denied\n Try again\n";
+            }
+        }
+    }
+	clearscreen();
+	show_cursor(false);
+	set_raw_mode(true);
+}
+
+
 
 int main() {
 	const int FPS = 60;
@@ -333,8 +384,9 @@ int main() {
 	char weapon;
 	set_raw_mode(true);
 	show_cursor(false);
-
+						
 	srand(time(NULL));
+	int key1 = 0 , key2 = 0, key3 = 0;
 	int HP = 100; //player health
 	int enemyHP = 100; // alien health
 	string tileStr = "default text";
@@ -405,6 +457,12 @@ int main() {
 				tileStr = "You picked up a alien blaster!";
 				set_world_location(row, col, ' ');
 				break;
+			case 'P':
+				puzzle(1 ,key1); // wanted to do if statement that changes the parameter depending on the map
+				tileStr = "Access Granted";
+				set_world_location(row, col, ' ');
+				break;
+				
 			}
 			// dont put usleep on <-this-> line it'll cause usleep*/
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
@@ -422,7 +480,7 @@ int main() {
 			movecursor(ROWS + 3, 0);
 			cout << tileStr << endl;
 			cout.flush();
-
+			
 		}
 	}
 	set_raw_mode(false);
