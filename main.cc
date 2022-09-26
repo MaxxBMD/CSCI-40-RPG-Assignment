@@ -38,11 +38,11 @@ map_t map0 = {
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', 'P', '1'},// part 1
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', 'i', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', 'A', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', 'H', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', '*', ' ', '*', '*', '*', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'*', ' ', ' ', 'A', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
 
@@ -51,13 +51,13 @@ map_t map0 = {
 map_t map1 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// storage room
 	{'0', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},// part 2
+	{'*', ' ', '*', '*', ' ', ' ', '*', '*', 'P', '*'},
+	{'*', ' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*'},
+	{'*', ' ', 'A', ' ', ' ', ' ', '*', ' ', 'A', '*'},
+	{'*', ' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*'},
 	{'*', ' ', '*', '*', ' ', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', '*', '*', ' ', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', 'A', ' ', ' ', ' ', '*', ' ', ' ', '*'},
-	{'*', ' ', '*', '*', ' ', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', '*', '*', ' ', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', '*', '*', ' ', ' ', ' ', '*', '*', '*'},
-	{'*', ' ', 'A', ' ', ' ', ' ', 'H', 'P', '2', '*'},
+	{'*', ' ', '*', '*', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', 'A', ' ', ' ', ' ', 'H', '*', '2', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
 
@@ -125,7 +125,7 @@ void print_map(const map_t &map, int player_row, int player_col) {
 				//otherwise, set a color based on what tile we're looking at...
 				switch (map.at(i).at(j)) {
 				case '*':
-					cout << RED;
+					setcolor(100, 50, 100);
 					break;
 				case 'H':
 					cout << GREEN;
@@ -364,51 +364,52 @@ void Combat_mode(int& HP) {
 
 }
 
-void puzzle(int puzzleNum, int &key) {
+int puzzleNum = 1;
+void puzzle() {
 
 	clearscreen();
 	show_cursor(true);
 	set_raw_mode(false);
 	string prompt;
-    if (puzzleNum == 1) {
-        cout << "Damn just got some deja vu \nThis reminds me of when Ripley was sneaking around the escape shuttle before fighting xenomorph...\nWhat was that song she sang during that battle? Something about a star?\n";
-        while (key != 1) {
-            getline(cin, prompt);
-            if (prompt == "You are my lucky star" || prompt == "you are my lucky star") { 
-                cout << "Access granted\n";
-				key = 1;//passed test
-            }
-            else {
-                cout << "Access denied\n Try again\n";
-            }
-        }
-    }
+	if (puzzleNum == 1) {
+		cout << "Damn just got some deja vu... \nThis reminds me of when Ripley Alien was sneaking around the escape shuttle before fighting that xenomorph...\nWhat was that song she was singing during that battle? Something about a star?\n";
+		while (true) {
+			getline(cin, prompt);
+			if (prompt == "You are my lucky star" || prompt == "you are my lucky star") {
+				cout << "Access granted\n";
+				break;
+			} else {
+				cout << "Hmm, no, that wasn't it.\n Something about, no, a lucky star?" << endl;
+			}
+		}
+	}
 
-    if (puzzleNum == 2) {
-        cout << "dalkjfkldsjafjklsadfjsdlafdkljdlaf\n Translation:When was the first war of worlds?\n";
-        while (key != 1) {
-            getline(cin, prompt);
-            if (prompt == "1938") {
-                key = 1;
-                cout << "Access granted\n";
-            } else {
-                cout << "Access denied\n Try again\n";
-            }
-        }
-    }
+	if (puzzleNum == 2) {
+		cout << "dalkjfkldsjafjklsadfjsdlafdkljdlaf\nTranslation: SECURITY QUESTION: WHAT EARTH YEAR WAS THE FIRST WAR OF THE WORLDS?\n";
+		while (true) {
+			getline(cin, prompt);
+			if (prompt == "1938") {
+				break;
+				cout << "Access granted\n";
+			} else {
+				cout << "Access denied.\n";
+			}
+		}
+	}
 
-    if (puzzleNum == 3) {
-        cout << "wowhododkljdfasdfkjlekhellokjfasbruhdk\n Translation:In Alien we have Xenomorph\nIn Avater we have The Na'vi\nIn Starship Troopers we Arachnids\n In District 9 we have...";
-        while (key != 1) {
-            getline(cin, prompt);
-            if (prompt == "prawns" || prompt == "Prawns") {
-                key = 1;
-                cout << "Access granted\n";
-            } else {
-                cout << "Access denied\n Try again\n";
-            }
-        }
-    }
+	if (puzzleNum == 3) {
+		cout << "wowhododkljdfasdfkjlekhellokjfasbruhdk\nTranslation:\nALIEN - XENOMORPH\n2001 - [translation error]\nSTARSHIP TROOPERS - ARRACHNIDS\nDISTRICT 9 - ______";
+		while (true) {
+			getline(cin, prompt);
+			if (prompt == "prawns" || prompt == "Prawns") {
+				break;
+				cout << "Access granted\n";
+			} else {
+				cout << "Access denied.\n";
+			}
+		}
+
+	}
 	clearscreen();
 	show_cursor(false);
 	set_raw_mode(true);
@@ -423,9 +424,9 @@ int main() {
 	char weapon;
 	set_raw_mode(true);
 	show_cursor(false);
-						
+
 	srand(time(NULL));
-	int key1 = 0 , key2 = 0, key3 = 0;
+	int key1 = 0, key2 = 0, key3 = 0;
 	int HP = 100; //player health
 	int enemyHP = 100; // alien health
 	string tileStr = "default text";
@@ -497,15 +498,20 @@ int main() {
 				set_world_location(row, col, ' ');
 				break;
 			case 'P':
-				puzzle(1 ,key1); // wanted to do if statement that changes the parameter depending on the map
-				tileStr = "Access Granted";
+				puzzle(); //do the puzzle
+				if (puzzleNum == 1) {
+					tileStr = "Yeah, that was the one.";
+				} else {
+					tileStr = "Access Granted";
+				}
+				puzzleNum++; //next P will be the next puzzle;
 				set_world_location(row, col, ' ');
 				break;
-				
+
+
 			}
 			// dont put usleep on <-this-> line it'll cause usleep*/
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
-			usleep(100000);
 
 			last_row = row;
 			last_col = col;
@@ -519,7 +525,8 @@ int main() {
 			movecursor(ROWS + 3, 0);
 			cout << tileStr << endl;
 			cout.flush();
-			
+			usleep(100000);
+
 		}
 	}
 	set_raw_mode(false);
