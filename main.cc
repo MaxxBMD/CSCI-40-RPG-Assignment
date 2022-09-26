@@ -461,14 +461,33 @@ int main() {
 				currentMap = 0;
 				row = 1;
 				col = 8;
-				tileStr = "teleported to map 0!";
+				tileStr = "Now in map 0!";
 				break;
 			case '1':
 				currentMap = 1;
 				row = 1;
 				col = 1;
-				tileStr = "teleported to map 1!";
+				tileStr = "Now in map 1!";
 				break;
+			case '2':
+				currentMap = 2;
+				
+				tileStr = "Now in map 2";
+				break;
+			case '3':
+				currentMap = 3;
+
+				tileStr = "Now in map 3";
+				break;
+			case '4':
+				currentMap = 4;
+
+				tileStr = "Now in map 4";
+				break;
+
+
+
+
 			case 'A':
 				//alien ancounter
 				resetcolor();
