@@ -7,6 +7,7 @@
 #include "/public/colors.h"
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 using namespace std;
 
@@ -18,16 +19,15 @@ using namespace std;
 vector<string> world_map = {
 	"-----------------      ",
 	"|        |      |      ",
-	"|        | H    |      ",
+	"|     i  | H   |       ",
 	"|        |      |      ",
-	"|        ---    |      ",
-	"| c        i    |      ",
-	"|               -------",
+	"|   H    --- F  |      ",
+	"|              |       ",
+	"|      G     B  -------",
 	"|    -----            1",
-	"|          A       z  1",
+	"|                  z  1",
 	"|                     1",
 	"-----------------------",
-
 
 
 };
@@ -73,7 +73,7 @@ void cutsceneTime(char cutsceneNum) {
 	if (cutsceneNum == 'i') {
 		//game intro
 		cout << "You wake up to the blaring ring of an alarm and a message broadcasting in a language of hoarse squeals and guttural noises you do not understand.\n";
-		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
+ 		cout << "Covering your ears and turning away from the flashing neon green bars of light arranged like a cage around your feeble, frail human body,\nyou remember how you got here: you were captured.\n";
 		cout << "Captured by alien invaders as you ran toward the evacuation site and thrown in a prison cell composed of lasers.\n";
 		cout << "Lasers that scorched right through the strands of hair you ripped from your head and placed in their path to learn just how hopeless your situation was.\n";
 		cout << "As the memories come back, you hear the buzz of the lasers begin to fade away. You open your eyes to see your cage has disappeared.\n";
@@ -127,112 +127,246 @@ void die() {
 	exit(1);
 }
 
-int combatRNG(int dmg) {
-	int y = rand() % 10;
-	if (y < 2)
-		return (dmg + (dmg * 0.3));//20% crit of +30% damage
-	else if (y < 3)
-		return (dmg = 0);//10% miss rate
-	// all part of simple damage deviation so basiccaly rest is 70%
-	if (y < 4)
-		return (dmg + 2);
+void alienBlaster (int& HP, int& enemyHP) {
+	clearscreen();
+    show_cursor(true);
+    set_raw_mode(false);
+   
+	while ((HP >= 0) && (enemyHP >= 0)) {
+		srand(time(NULL));
+   	    int rand1 = (rand() % 55) + 45;; 
+    	int rand2 = (rand() % 15) + 5;
+    	int alien_blaster = rand1;
+    	int enemyDmg = rand2;
+    	int newplayerDmg = alien_blaster;;
+   	    int newenemyDmg = enemyDmg;
+    	string action;
 
-	if (y < 5)
-		return (dmg - 5);
+	     cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
 
-	if (y < 6)
-		return (dmg + 7);
+        cout << "You strike the alien\n";
+        newplayerDmg = alien_blaster; //holds the random value
 
-	if (y < 6)
-		return (dmg + -2);
+        enemyHP -= newplayerDmg;//player dmg affects alien hp
+        cout << "You do: " << CYAN << alien_blaster;
+        resetcolor();
+        cout << " damage to the alien\n";
+        newplayerDmg = alien_blaster;// resets the random value to the deafault dmg
+        if (enemyHP <= 0) {
+            break;
+        }
 
-	if (y < 9)
-		return (dmg + 4);
-	else
-		return (0);
+        cout << "The Alien strikes\n";
+        newenemyDmg = enemyDmg;
+        HP -= newenemyDmg;
+		if (HP <= 0) {
+            break;
+        }
+		cout << "You take: " << CYAN << newenemyDmg;
+		resetcolor();
+		cout << " damage" << endl;
+		newenemyDmg = enemyDmg;
+
+        cout << "Attempt to flee by pressing q\n";
+        cin >> action;
+        if (action == "q") { 
+            break;
+        }
+	}
+		if (HP <= 0) {
+        cout << "YOU DIED!\n";
+		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
+			exit(0);
+		 }
+
+		 else if (enemyHP <= 0) {
+		cout << "You killed the alien!\n";
+		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
+         cout << "Back to exploring!" << endl;
+		 }
+  
+    
+    resetcolor();
+    show_cursor(false);
+    set_raw_mode(true);
+    return;
 }
 
-void combatMode(int &HP) {
+
+void Baseball_bat (int &HP, int &enemyHP) {
+
+    clearscreen();
+    show_cursor(true);
+    set_raw_mode(false);
+
+    while ((HP > 0) && (enemyHP > 0)) {
+        srand(time(NULL));
+        int rand1 = (rand() % 35) + 15;
+        int rand2 = (rand() % 30) + 15;
+        int bat  = rand1;
+        int enemyDmg = rand2;
+        int newplayerDmg = bat;
+        int newenemyDmg = enemyDmg;
+        int choice1;
+        string action;
+
+         cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
+
+        cout << "You strike the alien\n";
+        newplayerDmg = bat; //holds the random value
+        enemyHP -= newplayerDmg;//player dmg affects alien hp
+        cout << "You do ";
+        cout << CYAN << bat;
+        resetcolor();
+        cout << " damage to the alien\n";
+        newplayerDmg = bat;// resets the random value to the deafault dmg
+        if (enemyHP <= 0) {
+        break;
+        }
+
+        cout << "The Alien Strikes\n";
+        newenemyDmg = enemyDmg;
+        HP -= newenemyDmg;
+         cout << "You take ";
+        cout << CYAN << newenemyDmg;
+        resetcolor();
+        cout << " damage\n";
+        resetcolor();
+        newenemyDmg = enemyDmg;
+		if (HP <= 0){
+        break;
+        }
+
+        cout << "Attempt to flee by pressing q: Or press any other key to keep fighting\n";
+        cin >> action;
+        if (action == "q"){
+        break;
+         }
+
+ }
+
+       if (HP <= 0) {
+        cout << "YOU DIED \n";
+        cout << RED << "Aien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
+        exit(0);
+        }
+
+
+    if (enemyHP <= 0) {
+        cout << "You killed the Alien!\n";
+        cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
+        cout << "Back to exploring!" << endl;
+
+    }
+
+
+
+    resetcolor();
+    show_cursor(false);
+    set_raw_mode(true);
+    return;
+}
+
+   
+
+
+void Melee (int &HP, int &enemyHP) {
+	
 	clearscreen();
-	show_cursor(true);
-	set_raw_mode(false);
+    show_cursor(true);
+    set_raw_mode(false);
 
-	int playerDmg = 15;
-	int enemyDmg = 15;
-	int newplayerDmg = playerDmg;
-	int newenemyDmg = enemyDmg;
-	int enemyHP = 65;
-	int 
-	string action;
-	cout << "you have encoutered a Alien uh oh\n";
-	while ((HP > 0) && (enemyHP > 0)) {
-		cout << "you strike\n";
-		newplayerDmg = combatRNG(playerDmg);//holds the random value
+    while ((HP > 0) && (enemyHP > 0)) {	
+		srand(time(NULL));
+	    int rand1 = (rand() % 20) + 10;
+    	int rand2 = (rand() % 20) + 5;
+	    int Melee = rand1;
+        int enemyDmg = rand2;
+	    int newplayerDmg = Melee;
+        int newenemyDmg = enemyDmg;
+        int choice1;
+		string action;
+	
+		 cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+    	resetcolor();
 
-		enemyHP -= newplayerDmg;//player dmg affects alien hp
-		cout << "you do ";
-		cout << RED << newplayerDmg;
-		resetcolor();
-		cout << " damage to the alien\n";
-		newplayerDmg = playerDmg;// resets the random value to the deafault dmg
+        cout << "You strike the alien\n";
+        newplayerDmg = Melee; //holds the random value
+        enemyHP -= newplayerDmg;//player dmg affects alien hp
+        cout << "You do ";
+        cout << CYAN << Melee;
+        resetcolor();
+        cout << " damage to the alien\n";
+        newplayerDmg = Melee;// resets the random value to the deafault dmg
 		if (enemyHP <= 0) {
-			break;
+		break;
 		}
-		cout << "the alien has ";
-		cout << GREEN << enemyHP;
-		resetcolor();
-		cout << " hp remaining\n";
-
-		cout << "the alien strikes\n";
-		newenemyDmg = combatRNG(enemyDmg);
+        
+		cout << "The Alien Strikes\n";
+        newenemyDmg = enemyDmg;
 		HP -= newenemyDmg;
-		if (HP <= 0) {
-			break;
+		 cout << "You take ";
+        cout << CYAN << newenemyDmg;
+        resetcolor();
+        cout << " damage\n";
+        resetcolor();
+        newenemyDmg = enemyDmg;
+		if (HP <= 0){
+		break;
 		}
-		cout << "you take ";
-		cout << RED << newenemyDmg;
-		resetcolor();
-		cout << " damage\n";
 
-		newenemyDmg = enemyDmg;
-		cout << "you have ";
-		cout << GREEN << HP;
-		resetcolor();
-		cout << " hp remaining\n";
-
-
-		cout << "attempt to flee by pressing q or any other key to continue\n";
-		cin >> action;
-		if (action == "q") {
-			break;
-		}
+        cout << "Attempt to flee by pressing q: Or press any other key to keep fighting\n";
+        cin >> action;
+        if (action == "q"){
+		break;
+		 }
+		
 	}
-	if (HP <= 0) {
-		cout << "you died rip \n";
+		
+       if (HP <= 0) {
+        cout << "YOU DIED \n";
+        cout << RED << "Aien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
 		exit(0);
-	} else if (enemyHP <= 0) {
-		cout << " you killed the alien good job\n";
-			cout << "Back to exploring!" << endl;
-	}
+        }
 
-	resetcolor();
-	show_cursor(false);
-	set_raw_mode(true);
+     
+	if (enemyHP <= 0) {
+        cout << "You killed the Alien!\n";
+        cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+        resetcolor();
+        cout << "Back to exploring!" << endl;
+    
+	}
+	
+	
+
+	resetcolor();	
+    show_cursor(false);
+    set_raw_mode(true);
 	return;
 }
+
 
 int main() {
 	const int ROWS = world_map.size();
 	const int COLS = world_map.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BAD TIMES
 	const int FPS = 60;
+    char weapon;
+
+    int HP = 100; //player health
+    int enemyHP = 100; // alien health
+
 	int row = ROWS / 2, col = COLS / 2;
 	int last_row = -1, last_col = -1; //Save our last position so we only redraw on update
 	set_raw_mode(true);
 	show_cursor(false);
-
-	srand(time(NULL));
-	int HP = 100; //player health
-
 
 	while (true) {
 		int c = toupper(quick_read());
@@ -252,21 +386,54 @@ int main() {
 			cout << "Welcome to the game\n";
 			//cout.flush();
 		}
-		if (get_world_location(row, col) == 'r') {
+
+		
+		if (get_world_location(row, col) == 'G') {
 			set_world_location(row, col, ' ');
 			movecursor(ROWS + 2, 0);
-			cout << "You picked up a radish!\n";
+		
+			cout << "You picked up an Alien blaster. (This weopon deals more damage than your hands, but only contains 10 bullets)\n";
+	
 		}
 
 		//alien
-		if (get_world_location(row, col) == 'A') {
+		if (get_world_location(row, col) == 'F') {
 			movecursor(ROWS + 2, 0);
-			combatMode(HP);
-
+			cout << YELLOW << "WARNING:"; 
+			resetcolor();
+			cout << " You have encoutered a Alien uh oh\n";
+			cout << "Chose your weapon to fight the alien!\n";
+			cout << "Enter 1) Melee" << endl;
+ 			cout << "Enter 2) Alien Blaster" << endl;
+ 			cout << "Enter 3) Baseball Bat" << endl;
+			cin >> weapon;
+			if (!cin) die();
 
 			print_world(row, col);
-			set_world_location(row, col, ' ');
+            set_world_location(row, col, ' ');
+			
+			if (weapon == '1') {
+		    	Melee (HP, enemyHP);
+			}
+			
+			if (weapon == '2') {
+			alienBlaster (HP, enemyHP);
+			}	  
+
+			if (weapon == '3') {
+				Baseball_bat (HP, enemyHP);
+			}
+
 		}
+		 
+		if (get_world_location(row, col) == 'B') {
+         set_world_location(row, col, ' ');
+        movecursor(ROWS + 2, 0);
+		cout << "You picked up a baseball bat! This deals more damage but take in more damage" << endl;
+        
+		}
+	    
+		
 
 		//intro cutscene
 		if (get_world_location(row, col) == 'i') {
@@ -274,21 +441,23 @@ int main() {
 			set_world_location(row, col, ' ');
 		}
 
-		//health pickup
-		if (get_world_location(row, col) == 'H') {
-			//	healing(HP);
-			if (HP < 100) {
-				HP += 15;
-				if (HP > 100) {
-					HP = 100;
-				}
-				set_world_location(row, col, ' ');
-				movecursor(ROWS + 2, 0);
-				cout << "CONGRATULATIONS! You found a health pack!❤️ " << endl;
-				cout << " HP is now " << HP << "." << endl;
 
-			}
+
+		//health pickup
+		if (get_world_location(row, col) == 'H') {		
+             set_world_location(row, col,' ' );
+              movecursor(ROWS + 2, 0);
+		cout << "CONGRATS! You found a health pack!" << endl;
+        if (HP < 100){
+         HP += 15;
 		}
+         if (HP >= 100) {
+         cout << "Health is already at maxed" << endl;
+			 HP = 100;
+
+		}
+	}
+	
 
 		//end
 		if (get_world_location(row, col) == 'z') {
@@ -328,4 +497,5 @@ int main() {
 	}
 	*/
 }
+
 
