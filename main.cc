@@ -35,7 +35,7 @@ vector<string> world_map = {
 
 map_t map0 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
-	{'*', ' ', '*', 'F', ' ', 'i', 'F', '*', ' ', '1'},
+	{'*', ' ', '*', 'A', ' ', 'i', 'A', '*', ' ', '1'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', 'T', ' ', '*'},
 	{'*', 'B', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
@@ -88,7 +88,7 @@ void print_map(const map_t &map, int player_row, int player_col) {
 				case '*':
 					cout << RED;
 					break;
-				case 'T':
+				case 'H':
 					cout << GREEN;
 					break;
 				case 'R':
@@ -96,6 +96,9 @@ void print_map(const map_t &map, int player_row, int player_col) {
 					break;
 				case 'B':
 					cout << CYAN;
+					break;
+				case 'A':
+					setcolor(20, 0, 21);
 					break;
 				case '0':
 					cout << CYAN;
@@ -112,7 +115,7 @@ void print_map(const map_t &map, int player_row, int player_col) {
 				case '4':
 					cout << CYAN;
 					break;
-				} 
+				}
 				//...and then draw that tile (then reset color)
 				cout << map.at(i).at(j) << " " << RESET;
 			}
@@ -174,32 +177,6 @@ void cutsceneTime(char cutsceneNum) {
 
 }
 
-void combatTime() {
-	set_raw_mode(false);
-	clearscreen();
-
-	cout << "aaawaga" << endl;
-	string x = "";
-	cin >> x;
-
-	int i = 0;
-	while (x != "autowin") {
-		cout << "type autowin to end the battle" << endl;
-		cin >> x; //make this a getline
-		/*	possible actual inputs:
-			-melee / knife / [weapon name]
-			-ranged / gun / blaster / [weapon name]
-			-flee / whatever
-			-autowin (only a temp for debug)
-		*/
-
-		i++;
-		if (i >= 100) break;
-		//failsafe to prevent infinite loop is kicking in at least
-	}
-	set_raw_mode(true);
-	return;
-}
 
 void die() {
 	cout << "BAD INPUT" << endl;
@@ -207,73 +184,145 @@ void die() {
 }
 
 
+
+int gunAmmo = 10;
+
 void Combat_mode(int& HP) {
 
 	clearscreen();
 	show_cursor(true);
 	set_raw_mode(false);
 	int enemyHP = 100;
-	
-	while ((HP >= 0) && (enemyHP >= 0)) {
+
+
+	//possible todo: vectors of strings. each containing dialogue lines for the same action. pick one at random.
+
+
+	int randDialogue = 0;
+
+	vector<string> attackLinesMelee{"You attack the alien."};
+
+
+
+
+	movecursor(0, 0);
+	while ((HP > 0) && (enemyHP > 0)) {
 		srand(time(NULL));
 		int rand1 = (rand() % 40) + 20;;
 		int rand2 = (rand() % 30) + 10;
+
+
 		int alien_blaster = rand1;
 		int enemyDmg = rand2;
 		int newplayerDmg = alien_blaster;;
 		int newenemyDmg = enemyDmg;
 		string action;
 
+
+		//	movecursor(0, 0);
+
 		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
 		resetcolor();
 
-		cout << "You strike the alien\n";
-		newplayerDmg = alien_blaster; //holds the random value
 
-		enemyHP -= newplayerDmg;//player dmg affects alien hp
-		cout << "You do: " << CYAN << alien_blaster;
-		resetcolor();
-		cout << " damage to the alien\n";
-		newplayerDmg = alien_blaster;// resets the random value to the deafault dmg
+		cout << "What will you do?\nMELEE - 1\t RANGED(" << gunAmmo <<  ") - 2" << endl;
+		usleep(100000);
+
+		char playerChoice = '0';
+		cin >> playerChoice;
+
+		cout << playerChoice << endl;
+
+		assert(playerChoice == '1' || playerChoice == '2');
+
+		/*
+			ask player to pick an option: melee or blaster? (also display ammo count)
+
+			if (choice is melee)
+				high  damage to alien
+				medium alien deals damage to you
+
+
+			if (choice is ranged)
+				very high damage alien
+				gunAmmo decreases by one
+
+			if alien HP is zero, end the battle
+				cin >> dummyVariable as a 'press any key to continue' style of thing
+				return the function
+
+			else if your HP is zero, say YOU DIED and end the whole program
+
+			(and then it repeats to the top)
+
+		   */
+
+		if (playerChoice == '1') {
+			//melee
+			cout << "You strike the alien\n";
+			newplayerDmg = alien_blaster; //holds the random value
+
+			enemyHP -= newplayerDmg;//player dmg affects alien hp
+			cout << "You do: " << CYAN << alien_blaster + 15;
+			resetcolor();
+			cout << " damage to the alien\n";
+			newplayerDmg = alien_blaster;// resets the random value to the deafault dmg
+		} else if (playerChoice == '2') {
+			//ranged
+			if (gunAmmo > 0) {
+				cout << "BANG! ";
+				newplayerDmg = alien_blaster + 30; //holds the random value
+				gunAmmo--;
+
+				enemyHP -= newplayerDmg;//player dmg affects alien hp
+				cout << "You do: " << CYAN << alien_blaster;
+				resetcolor();
+				cout << " damage to the alien\n";
+				newplayerDmg = alien_blaster;// resets the random value to the deafault dmg
+			} else {
+				cout << "*CLICK!*\nYour blaster is our of ammunition!" << endl;
+			}
+
+		}
+
+
 		if (enemyHP <= 0) {
-			break;
-		}
+			cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+			cout << CYAN << "You killed the alien!\n" << RESET;
+			usleep(750000);
+			//cout << "Press any key to continue" << endl;
+			//int dummyVar = 0;
+			//	cin >> dummyVar;
+			//	dummyVar = 0;
 
-		cout << "The Alien strikes\n";
-		newenemyDmg = enemyDmg;
-		HP -= newenemyDmg;
-		if (HP <= 0) {
 			break;
-		}
-		cout << "You take: " << CYAN << newenemyDmg;
-		resetcolor();
-		cout << " damage" << endl;
-		newenemyDmg = enemyDmg;
+		} else {
 
-		cout << "Attempt to flee by pressing q\n";
-		cin >> action;
-		if (action == "q") {
-			break;
-		}
-	}
-	if (HP <= 0) {
-		cout << "YOU DIED!\n";
-		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-		resetcolor();
-		exit(0);
-	}
+			cout << "The Alien strikes\n";
+			newenemyDmg = enemyDmg;
+			HP -= newenemyDmg;
 
-	if (enemyHP <= 0) {
-		cout << "You killed the alien!\n";
-		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-		resetcolor();
-		cout << "Back to exploring!" << endl;
+			cout << "You take " << CYAN << newenemyDmg;
+			resetcolor();
+			cout << " damage." << endl;
+			newenemyDmg = enemyDmg;
+
+
+			if (HP <= 0) {
+				cout << "YOU DIED!\n";
+				//  cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+				resetcolor();
+				exit(0);
+			}
+
+		}
 	}
 
 	resetcolor();
 	show_cursor(false);
 	set_raw_mode(true);
 	return;
+
 }
 
 
@@ -322,71 +371,58 @@ int main() {
 				col = 8;
 				tileStr = "teleported to map 0!";
 				break;
-			case '1': 
+			case '1':
 				currentMap = 1;
 				row = 1;
 				col = 1;
 				tileStr = "teleported to map 1!";
 				break;
-			case 'F':
-		 set_world_location(row, col, ' ');
-			cout << YELLOW << "WARNING:";
-            resetcolor();
-            cout << " You have encoutered a Alien uh oh\n";
-            cout << "Chose your weapon to fight the alien!\n";
-            cout << "Enter 1) Melee" << endl;
-            cout << "Enter 2) Alien Blaster" << endl;
-            cout << "Enter 3) Baseball Bat" << endl;
-            cin >> weapon;
-            if (!cin) die();
+			case 'A':
+				//alien ancounter
+				resetcolor();
+				Combat_mode(HP);
+				set_world_location(row, col, ' ');
+				tileStr = "You kiled the alien!";
+				break;
+			case 'H':
+				tileStr = "CONGRATS! You found a health pack!";
+				if (HP < 100) {
+					HP += 25;
+					set_world_location(row, col, ' ');
+				}
 
-            if (weapon == '1') {
-                Combat_mode (HP);
-            }
+				if (HP >= 100) {
+					tileStr =  "Health is already at maxed";
+					HP = 100;
+				}
+				break;
+			case 'B':
+				tileStr = "You picked up a baseball bat!";
+				set_world_location(row, col, ' ');
+				break;
 
-            if (weapon == '2') {
-            Combat_mode(HP);
-            }
-
-            if (weapon == '3') {
-                Combat_mode(HP);
+			case 'G':
+				tileStr = "You picked up a alien blaster!";
+				set_world_location(row, col, ' ');
+				break;
 			}
-				break;
-		case 'H':
-			tileStr = "CONGRATS! You found a health pack!";
-			 if (HP < 100){
-            HP += 25;
-			 set_world_location(row, col, ' ');
-                }
-			 
-			 if (HP >= 100) {
-            tileStr =  "Health is already at maxed";
-             HP = 100;
-            }	
-				break;
-		case 'B': 
-			tileStr = "You picked up a baseball bat!";
-			   set_world_location(row, col, ' ');	
-	     		break;
-
-		case 'G':
-			tileStr = "You picked up a alien blaster!";
-			   set_world_location(row, col, ' ');	
-			break;
-		}
 			// dont put usleep on <-this-> line it'll cause usleep*/
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
+			usleep(100000);
 
 			last_row = row;
 			last_col = col;
 			movecursor(0, 0);
 			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET << " MAP: " << currentMap;
-			cout << GREEN << " HP: " << HP <<"❤️ ";
+			cout << GREEN;
+			if (HP < 50) cout << YELLOW;
+			if (HP < 30) cout << RED;
+			cout << " HP: " << HP;
 			resetcolor();
 			movecursor(ROWS + 3, 0);
 			cout << tileStr << endl;
 			cout.flush();
-			
+
 		}
 	}
 	set_raw_mode(false);
