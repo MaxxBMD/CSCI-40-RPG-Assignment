@@ -1,6 +1,6 @@
 //Fill out this comment with your names and which bullet points you did
 //Partners: Herbart Hernandez, Rene Hernandez, Ayden Messick, Allesandra Orozco-Newton, Brandon Sam
-//Bullet Points:
+//Bullet Points: world map, combat, colors, puzzles, (amount of dialogue not counted yet)
 //Extra Credit:	soundtrack/art
 //URL to cover art and music: https://youtu.be/39IdvNnUgRA
 #include "/public/read.h"
@@ -42,39 +42,39 @@ map_t map1 = {
 
 map_t map2 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// main hall
-	{'*', ' ', '*', '*', '*', '*', '*', ' ', ' ', '*'},// part 3
-	{'*', ' ', '*', '*', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', 'P', ' ', ' ', '*', ' ', ' ', '*'},
-	{'*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', '*'},
-	{'3', ' ', ' ', '*', ' ', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', ' ', '*', ' ', ' ', '*', '*', ' ', '*'},
-	{'*', '*', ' ', '*', '*', ' ', '*', '*', ' ', '*'},
-	{'*', '*', ' ', '*', '*', ' ', '*', '*', ' ', '*'},
+	{'*', '*', ' ', '*', '*', '*', 'H', '*', 'A', '*'},// part 3
+	{'*', '*', 'A', ' ', '*', 'A', ' ', '*', ' ', '*'},
+	{'*', ' ', ' ', 'A', '*', ' ', ' ', ' ', ' ', '*'},
+	{'*', 'A', ' ', ' ', 'P', ' ', 'A', ' ', ' ', '*'},
+	{'3', ' ', ' ', ' ', '*', 'A', ' ', 'A', ' ', '*'},
+	{'*', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
+	{'*', '*', 'A', ' ', '*', 'A', ' ', '*', ' ', '*'},
+	{'*', '*', ' ', '*', '*', '*', ' ', '*', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '1', '*'},
 };
 
 
 map_t map3 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// the lab
-	{'*', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},// part 4
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', 'H', ' ', ' ', ' ', ' ', ' ', ' ', '*', '*'},// part 4
+	{'*', ' ', 'A', ' ', '*', '*', ' ', 'A', '*', '*'},
+	{'*', '*', '*', ' ', ' ', 'A', ' ', ' ', ' ', '*'},
+	{'4', ' ', 'P', ' ', 'A', ' ', ' ', ' ', ' ', '*'},
+	{'*', '*', '*', ' ', '*', '*', 'A', ' ', ' ', '2'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'4', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '2'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', '*', ' ', 'P', ' ', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
+	{'*', 'A', '*', 'A', ' ', ' ', ' ', ' ', '*', '*'},
+	{'*', 'i', '*', ' ', '*', '*', ' ', ' ', '*', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
 map_t map4 = {
 	{' ', ' ', ' ', ' ', ' ', '*', '*', '*', '*', '*'},// the command center
-	{' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},// part 5
-	{' ', ' ', ' ', '*', 'A', ' ', ' ', 'A', 'H', '*'},
-	{' ', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
-	{'*', 'P', 'A', ' ', ' ', '*', ' ', ' ', ' ', '3'},
-	{'*', ' ', 'A', ' ', ' ', '*', 'A', ' ', ' ', '*'},
-	{' ', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
-	{' ', ' ', ' ', '*', ' ', ' ', ' ', '*', ' ', '*'},
+	{' ', ' ', ' ', ' ', '*', 'A', ' ', ' ', ' ', '*'},// part 5
+	{' ', ' ', ' ', '*', 'A', 'A', ' ', 'A', 'H', '*'},
+	{' ', '*', '*', 'A', ' ', ' ', ' ', '*', '*', '*'},
+	{'*', 'P', 'A', ' ', 'A', '*', ' ', ' ', ' ', '3'},
+	{'*', ' ', 'A', ' ', ' ', '*', 'A', ' ', 'A', '*'},
+	{' ', '*', '*', 'A', ' ', ' ', ' ', '*', '*', '*'},
+	{' ', ' ', ' ', '*', 'A', 'A', ' ', '*', 'H', '*'},
 	{' ', ' ', ' ', ' ', '*', 'A', ' ', '|', ' ', '*'},
 	{' ', ' ', ' ', ' ', ' ', '*', '*', '*', '5', '*'}
 };
@@ -210,9 +210,10 @@ void Combat_mode(int& HP) {
 
 	int randDialogue = 0;
 
-	vector<string> attackLinesMelee{"You attack the alien."};
-	vector<string> attackLinesRange{"You fire your blaster at the alien"};
-	vector<string> attackOpener{"Suddenly, an alien reveals itself before you!"};
+	vector<string> attackLinesMelee{"You attack the alien.", "You swing your knife at the alien.", "You thrust your knife fowards, aiming directly for the alien."};
+	vector<string> attackLinesRange{"You fire your blaster at the alien.", "You fire a shot at the alien.", "A bolt of blasma shoots out of your blaster towards the alien."};
+	vector<string> attackOpener{"Suddenly, an alien reveals itself before you!", "Our of nowhere, an alien jumps out at you!", "Suddenly, you trip and fall. Turns out, an alien was camoflaged underneath you!", "The floor and walls before you begin shifting. It's an alien!"};
+
 
 
 
@@ -247,28 +248,6 @@ void Combat_mode(int& HP) {
 		cout << playerChoice << endl;
 
 		assert(playerChoice == '1' || playerChoice == '2');
-
-		/*
-			ask player to pick an option: melee or blaster? (also display ammo count)
-
-			if (choice is melee)
-				high  damage to alien
-				medium alien deals damage to you
-
-
-			if (choice is ranged)
-				very high damage alien
-				gunAmmo decreases by one
-
-			if alien HP is zero, end the battle
-				cin >> dummyVariable as a 'press any key to continue' style of thing
-				return the function
-
-			else if your HP is zero, say YOU DIED and end the whole program
-
-			(and then it repeats to the top)
-
-		   */
 
 		if (playerChoice == '1') {
 			//melee
@@ -414,25 +393,25 @@ void puzzle() {
 	}
 
 	if (puzzleNum == 5) {
-		cout << "Before you is a large terminal. It appears to be able to control everything on the ship.\nMost of it has been damaged by the crash, but some of it remains intact.\nOff to the side is a series of buttons and lights\n.";
+		cout << "Before you is a large terminal. It appears to be able to control everything on the ship.\nMost of it has been damaged by the crash, but some of it remains intact.\nOff to the side is a series of buttons and lights\n";
 
 
 		char buttons = '0';
 
 		while (true) {
+			cout << "--1-2-3--\n";
 			cout << "{ ";
 			for (int i = 0; i < lightBoard.size(); ++i) {
 				cout << lightBoard.at(i) << " ";
 			}
-			cin >> buttons;
 			cout << "}" << endl;
+			cin >> buttons;
 
 			if (buttons == '1') {
 				toggleLight(0);
 				toggleLight(2);
 			}
 			if (buttons == '2') {
-				toggleLight(0);
 				toggleLight(1);
 
 			}
@@ -441,13 +420,23 @@ void puzzle() {
 				toggleLight(2);
 			}
 
-
 			int sum = 0;
 			for (int i = 0; i < lightBoard.size(); ++i)
 				sum += lightBoard.at(i);
 
 			if (sum >= lightBoard.size()) break;
 		}
+		cout << "\n{ ";
+		for (int i = 0; i < lightBoard.size(); ++i) {
+			cout << lightBoard.at(i) << " ";
+		}
+		cout << "}" << endl;
+
+		cout << "The all lights are now on.\nYou hear an airlock open behind you\n";
+		usleep(1450000);
+
+
+
 
 	}
 
@@ -588,6 +577,10 @@ int main() {
 				puzzle(); //do the puzzle
 				if (puzzleNum == 1) {
 					tileStr = "Yeah, that was the one.";
+				} else if (puzzleNum == 5) {
+					tileStr = "Is that the exit over there?";
+					set_world_location(8, 7, ' ');
+
 				} else {
 					tileStr = "Access Granted";
 				}
