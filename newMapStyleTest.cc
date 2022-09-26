@@ -36,13 +36,13 @@ vector<string> world_map = {
 map_t map0 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '1'},
-	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', '*', ' ', '*', ' ', '*'},
-	{'*', ' ', ' ', ' ', '*', '*', ' ', ' ', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', ' ', '*', '*', ' ', '*', '*', '*', ' ', '*'},
+	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
 
@@ -185,6 +185,8 @@ void set_world_location(size_t row, size_t col, char c) {
 	if (col >= theMaps.at(currentMap).at(row).size()) return;
 
 	theMaps.at(currentMap).at(row).at(col) = c;
+
+
 }
 
 
@@ -249,7 +251,7 @@ int main() {
 
 			case 'T':
 				tileStr = "some Ts";
-				//	set_world_location(row, col, ' '); //does not work. will need to directly edit the map instead??
+				set_world_location(row, col, ' '); //does not work. will need to directly edit the map instead??
 				break;
 			case '0':
 				currentMap = 0;
@@ -265,6 +267,7 @@ int main() {
 				break;
 			}
 
+			/* dont put usleep on <-this-> line it'll cause usleep*/
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
 
 			last_row = row;
