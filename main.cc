@@ -122,20 +122,22 @@ void print_map(const map_t &map, int player_row, int player_col) {
 	}
 }
 
+
 char get_world_location(size_t row, size_t col) {
-	if (row >= world_map.size()) return ' ';
-	if (col >= world_map.at(row).size()) return ' ';
-	return world_map.at(row).at(col);
+	if (row >= theMaps.at(currentMap).size()) return ' ';
+	if (col >= theMaps.at(currentMap).at(row).size()) return ' ';
+	return theMaps.at(currentMap).at(row).at(col);
 }
 
 
 void set_world_location(size_t row, size_t col, char c) {
-	if (row >= world_map.size()) return;
-	if (col >= world_map.at(row).size()) return;
+	if (row >= theMaps.at(currentMap).size()) return;
+	if (col >= theMaps.at(currentMap).at(row).size()) return;
 
-	world_map.at(row).at(col) = c;
+	theMaps.at(currentMap).at(row).at(col) = c;
+
+
 }
-
 
 
 
@@ -333,20 +335,21 @@ void Melee (int &HP, int &enemyHP) {
 
 int main() {
 	const int FPS = 60;
-	char weapon;
-
-	int HP = 100; //player health
-	int enemyHP = 100; // alien health
-
 	int row = ROWS / 2, col = COLS / 2;
 	int last_row = -1, last_col = -1; //Save our last position so we only redraw on update
 	set_raw_mode(true);
 	show_cursor(false);
 
+	srand(time(NULL));
+	int HP = 100; //player health
+
 	string tileStr = "default text";
 
 	row = 1;
 	col = 1;
+
+
+
 
 	while (true) {
 		tileStr = "default text";
@@ -359,7 +362,6 @@ int main() {
 		//if (c == 'i') checkInventory(); //this function does not exist. just a temp for when inventory is added.
 		if (!(row == last_row and col == last_col)) { //If we moved...
 
-			//this whole section is for doing thigns when the player goes to a place. add cases here for interactions
 			switch (get_world_location(row, col)) {
 			case '*':
 				//comment out this whole case to disable collision
@@ -370,7 +372,7 @@ int main() {
 
 			case 'T':
 				tileStr = "some Ts";
-				set_world_location(row, col, ' '); //does not work. will need to directly edit the map instead??
+				set_world_location(row, col, ' ');
 				break;
 			case '0':
 				currentMap = 0;
@@ -386,100 +388,23 @@ int main() {
 				break;
 			}
 
+
 			/* dont put usleep on <-this-> line it'll cause usleep*/
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
-
 
 			last_row = row;
 			last_col = col;
 			movecursor(0, 0);
-			cout << CYAN << "ROW: " << row << YELLOW << " COL: " << col << RESET << " MAP: " << currentMap;
+			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET << " MAP: " << currentMap;
 			movecursor(ROWS + 3, 0);
 			cout << tileStr << endl;
 			cout.flush();
-		}
 
 
-		if (get_world_location(row, col) == 'G') {
-			set_world_location(row, col, ' ');
-			movecursor(ROWS + 2, 0);
 
-			cout << "You picked up an Alien blaster. (This weopon deals more damage than your hands, but only contains 10 bullets)\n";
-
-		}
-
-		//alien
-		if (get_world_location(row, col) == 'F') {
-			movecursor(ROWS + 2, 0);
-			cout << YELLOW << "WARNING:";
-			resetcolor();
-			cout << " You have encoutered a Alien uh oh\n";
-			cout << "Chose your weapon to fight the alien!\n";
-			cout << "Enter 1) Melee" << endl;
-			cout << "Enter 2) Alien Blaster" << endl;
-			cout << "Enter 3) Baseball Bat" << endl;
-			cin >> weapon;
-			if (!cin) die();
-
-			print_map(theMaps.at(currentMap), row, col);
-			set_world_location(row, col, ' ');
-
-			if (weapon == '1') {
-				Combat_mode(HP, enemyHP);
-			}
-
-			if (weapon == '2') {
-				Combat_mode(HP, enemyHP);
-			}
-
-			if (weapon == '3') {
-				Combat_mode(HP, enemyHP);
-			}
 
 
 		}
-
-		if (get_world_location(row, col) == 'B') {
-			set_world_location(row, col, ' ');
-			movecursor(ROWS + 2, 0);
-			cout << "You picked up a baseball bat! This deals more damage but take in more damage" << endl;
-
-		}
-
-
-
-		//intro cutscene
-		if (get_world_location(row, col) == 'i') {
-			cutsceneTime('i');
-			set_world_location(row, col, ' ');
-		}
-
-
-
-		//health pickup
-		if (get_world_location(row, col) == 'H') {
-			set_world_location(row, col, ' ');
-			movecursor(ROWS + 2, 0);
-			cout << "CONGRATS! You found a health pack!" << endl;
-			if (HP < 100) {
-				HP += 15;
-			}
-			if (HP >= 100) {
-				cout << "Health is already at maxed" << endl;
-				HP = 100;
-
-			}
-		}
-
-
-		//end
-		if (get_world_location(row, col) == 'z') {
-			movecursor(ROWS + 2, 0);
-			cout << "YOU WIN!!!!!!!!!^G^G^G\n";
-			usleep(2'000'000);
-			break;
-		}
-		if (c == ERR) usleep(1'000'000 / FPS);
 	}
 	set_raw_mode(false);
 	show_cursor(true);
@@ -487,28 +412,7 @@ int main() {
 	clearscreen();
 
 
-	/*
-	cout << "Please enter a row and column" << endl;
-	int row, col;
-	cin >> row >> col;
-	if (world_map.at(row).at(col) == '*') cout << "There is a wall there.\n";
 
-	//A vector is a data structure, "Something that holds multiple variables"
-	//Syntax: vector<type of thing to hold> name of the vector(size of the vector)
-	vector<int> help = {1,2,3,4,50};
-	//Print the contents of help:
-	for (int x : help) cout << x << endl;
 
-	//This just made 40 integers, within a vector named help
-	for (size_t i = 0; i < help.size(); i++) {
-	    cout << "Please enter the value for help.at(" << i << ")\n";
-	    cin >> help.at(i);
-	}
-	cout << "Here is the help vector!\n";
-	for (int x : help) {
-	    cout << x << endl;
-	}
-	*/
+
 }
-
-
