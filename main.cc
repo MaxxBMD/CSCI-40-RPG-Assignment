@@ -1,8 +1,8 @@
 //Fill out this comment with your names and which bullet points you did
 //Partners: Herbart Hernandez, Rene Hernandez, Ayden Messick, Allesandra Orozco-Newton, Brandon Sam
 //Bullet Points:
-//Extra Credit:
-//URL to cover art and music:
+//Extra Credit:	soundtrack/art
+//URL to cover art and music: https://youtu.be/39IdvNnUgRA
 #include "/public/read.h"
 #include "/public/colors.h"
 #include <iostream>
