@@ -1,6 +1,6 @@
 //Fill out this comment with your names and which bullet points you did
 //Partners: Herbart Hernandez, Rene Hernandez, Ayden Messick, Allesandra Orozco-Newton, Brandon Sam
-//Bullet Points: world map, combat, colors, puzzles, (amount of dialogue not counted yet)
+//Bullet Points: world map, combat, colors, puzzles, 40 lines of dialogue
 //Extra Credit:	soundtrack/art
 //URL to cover art and music: https://youtu.be/39IdvNnUgRA
 #include "/public/read.h"
@@ -223,11 +223,6 @@ void Combat_mode(int& HP) {
 	set_raw_mode(false);
 	int enemyHP = 85;
 
-
-	//possible todo: vectors of strings. each containing dialogue lines for the same action. pick one at random.
-
-
-
 	vector<string> attackLinesMelee{"You attack the alien.", "You swing your knife at the alien.", "You thrust your knife fowards, aiming directly for the alien.", "You strike the alien."};
 	vector<string> attackLinesRange{"You fire your blaster at the alien.", "You fire a shot at the alien.", "A bolt of blasma shoots out of your blaster towards the alien.", "You pull the trigger on your blaster"};
 	vector<string> attackOpener{"Suddenly, an alien reveals itself before you!", "Out of nowhere, an alien jumps out at you!", "Suddenly, you trip and fall. Turns out, an alien was camoflaged underneath you!", "The floor and walls before you begin shifting. It's an alien!"};
@@ -235,8 +230,6 @@ void Combat_mode(int& HP) {
 	movecursor(0, 0);
 	cout << attackOpener.at(randDialogue()) << endl;;
 	while ((HP > 0) && (enemyHP > 0)) {
-
-
 
 		srand(time(NULL));
 		int rand1 = (rand() % 40) + 20;;
@@ -249,13 +242,8 @@ void Combat_mode(int& HP) {
 		int newenemyDmg = enemyDmg;
 		string action;
 
-
-		//	movecursor(0, 0);
-
 		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
 		resetcolor();
-
-
 
 		cout << "What will you do?\nMELEE - 1\t RANGED(" << gunAmmo <<  ") - 2" << endl;
 		usleep(100000);
@@ -264,9 +252,7 @@ void Combat_mode(int& HP) {
 		cin.clear();
 
 		char playerChoice = '0';
-		cin >> playerChoice; //this is not working1!
-//		getline(cin, playerChoice);
-
+		cin >> playerChoice;
 
 		cout << playerChoice << endl;
 
@@ -458,10 +444,6 @@ void puzzle() {
 
 		cout << "The all lights are now on.\nYou hear an airlock open behind you\n";
 		usleep(1450000);
-
-
-
-
 	}
 
 
@@ -469,10 +451,6 @@ void puzzle() {
 	show_cursor(false);
 	set_raw_mode(true);
 }
-
-
-
-
 
 
 int main() {
@@ -495,7 +473,7 @@ int main() {
 	cutsceneTime(1);
 
 	while (true) {
-		tileStr = "default text";
+		tileStr = "It's cold.";
 
 
 
@@ -545,7 +523,7 @@ int main() {
 					col = 1;
 				}
 				currentMap = 2;
-				tileStr = "Now in map 2";
+				tileStr = "Could be the main hall";
 				break;
 			case '3':
 				if (currentMap == 2) {
@@ -556,13 +534,13 @@ int main() {
 					col = 1;
 				}
 				currentMap = 3;
-				tileStr = "Now in map 3";
+				tileStr = "Looks like some laboratory area.";
 				break;
 			case '4':
 				row = 4;
 				col = 8;
 				currentMap = 4;
-				tileStr = "Now in map 4";
+				tileStr = "This is definitley the ship's bridge.";
 				break;
 			case '5':
 				cutsceneTime(2);
