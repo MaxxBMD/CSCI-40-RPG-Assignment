@@ -11,26 +11,6 @@
 
 using namespace std;
 using map_t = vector<vector<char>>;
-//WHAT
-
-
-
-//global variables go here:
-vector<string> world_map = {
-	"-----------------      ",
-	"|        |      |      ",
-	"|     i  | H   |       ",
-	"|        |      |      ",
-	"|   H    ---   |      ",
-	"|              |       ",
-	"|      G     B  -------",
-	"|    -----            1",
-	"|                  z  1",
-	"|     F                1",
-	"-----------------------",
-
-
-};
 
 
 map_t map0 = {
@@ -45,23 +25,18 @@ map_t map0 = {
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
-
-
-
 map_t map1 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// storage room
 	{'0', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},// part 2
 	{'*', ' ', '*', ' ', '*', ' ', '*', '*', 'P', '*'},
-	{'*', ' ', '*', ' ', '*', 'A', '*', ' ', ' ', '*'},
-	{'*', ' ', 'A', ' ', ' ', ' ', '*', ' ', 'A', '*'},
+	{'*', ' ', '*', ' ', '*', 'A', '*', '*', ' ', '*'},
+	{'*', ' ', 'A', ' ', ' ', ' ', '*', ' ', ' ', '*'},
+	{'*', ' ', '*', ' ', '*', ' ', '*', 'A', ' ', '*'},
 	{'*', ' ', '*', ' ', '*', ' ', '*', ' ', ' ', '*'},
 	{'*', ' ', '*', ' ', '*', ' ', '*', '*', ' ', '*'},
-	{'*', ' ', '*', ' ', '*', ' ', ' ', '*', ' ', '*'},
-	{'*', ' ', 'A', ' ', ' ', ' ', 'H', '*', '2', '*'},
-	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
+	{'*', ' ', 'A', ' ', ' ', ' ', 'H', '*', ' ', '*'},
+	{'*', '*', '*', '*', '*', '*', '*', '*', '2', '*'}
 };
-
-
 map_t map2 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '1', '*'},// main hall
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},// part 3
@@ -74,41 +49,36 @@ map_t map2 = {
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
-
-
 map_t map3 = {
-	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// The Lab -- DUMP A LOT OF DIALOUGUE HERE MAYBE
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},// part 4
+	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// the lab
+	{'*', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},// part 4
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
 	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', '*', '*', ' ', ' ', ' ', ' ', '*', '*', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
-
 map_t map4 = {
-	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},// Final Room
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},// part 5
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
-	{'*', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '*'},
+	{' ', ' ', ' ', ' ', '*', '*', ' ', ' ', ' ', ' '},// the command center
+	{' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' '},// part 5
+	{' ', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', ' '},
+	{' ', ' ', '*', ' ', 'A', 'A', ' ', '*', ' ', ' '},
+	{' ', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', ' '},
+	{' ', '*', 'A', ' ', ' ', ' ', ' ', 'A', '*', ' '},
+	{'*', ' ', ' ', '*', ' ', ' ', '*', ' ', ' ', '*'},
+	{'*', ' ', ' ', '*', 'A', 'A', '*', ' ', ' ', '*'},
+	{'6', 'P', 'H', '*', ' ', ' ', '*', ' ', 'H', '*'},
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'}
 };
-
 vector<map_t> theMaps{map0, map1, map2, map3, map4};
 int currentMap = 0;
 
 
 const int ROWS = map0.size();
 const int COLS = map0.at(0).size(); //MAKE SURE ALL ROWS ARE THE SAME SIZE OR BAD TIMES
-//hmmm, this could cause problems down the line if we're using this on multiple maps with multiple sizes
 
 void print_map(const map_t &map, int player_row, int player_col) {
 
@@ -176,10 +146,7 @@ char get_world_location(size_t row, size_t col) {
 void set_world_location(size_t row, size_t col, char c) {
 	if (row >= theMaps.at(currentMap).size()) return;
 	if (col >= theMaps.at(currentMap).at(row).size()) return;
-
 	theMaps.at(currentMap).at(row).at(col) = c;
-
-
 }
 
 
@@ -188,6 +155,7 @@ void cutsceneTime(char cutsceneNum) {
 	//the int we take in determines what text is outputted
 	/* 0 = default
 	   1 = game intro
+	   2 = finale
 
 	   */
 	clearscreen();
@@ -224,8 +192,7 @@ void die() {
 }
 
 
-
-int gunAmmo = 10;
+int gunAmmo = 0;
 
 void Combat_mode(int& HP) {
 
@@ -332,14 +299,14 @@ void Combat_mode(int& HP) {
 		if (enemyHP <= 0) {
 			cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
 			cout << CYAN << "You killed the alien!\n" << RESET;
-			usleep(750000);
+			usleep(125000);
 			//cout << "Press any key to continue" << endl;
 			//int dummyVar = 0;
 			//	cin >> dummyVar;
 			//	dummyVar = 0;
 
 			break;
-		} else {
+		} else if (playerChoice != '2' || (playerChoice == '2' && gunAmmo <= 0)) {
 
 			cout << "The Alien strikes\n";
 			newenemyDmg = enemyDmg;
@@ -440,26 +407,31 @@ int main() {
 
 	while (true) {
 		tileStr = "default text";
+
+
+
+		if (HP < 30) tileStr = "it hurts...";
+
+
+
+
+
 		int c = toupper(quick_read());
 		if (c == 'Q') break;
 		if (c == 'W' or c == UP_ARROW) row--;
 		if (c == 'S' or c == DOWN_ARROW) row++;
 		if (c == 'A' or c == LEFT_ARROW) col--;
 		if (c == 'D' or c == RIGHT_ARROW) col++;
-		//if (c == 'i') checkInventory(); //this function does not exist. just a temp for when inventory is added.
 		if (!(row == last_row and col == last_col)) { //If we moved...
+
+
 
 			switch (get_world_location(row, col)) {
 			case '*':
 				//comment out this whole case to disable collision
 				row = last_row;
 				col = last_col;
-				tileStr = "can't go there.";
-				break;
-
-			case 'T':
-				tileStr = "some Ts";
-				set_world_location(row, col, ' ');
+				tileStr = "can't go there. that's a wall.";
 				break;
 			case '0':
 				currentMap = 0;
@@ -468,30 +440,40 @@ int main() {
 				tileStr = "Now in map 0!";
 				break;
 			case '1':
+				if (currentMap == 0) {
+					row = 1;
+					col = 1;
+				} else if (currentMap == 2) {
+					row = 8;
+					col = 8;
+				}
 				currentMap = 1;
-				row = 1;
-				col = 1;
 				tileStr = "Now in map 1!";
 				break;
 			case '2':
+				if (currentMap == 1) {
+					row = 1;
+					col = 1;
+				}
 				currentMap = 2;
-
 				tileStr = "Now in map 2";
 				break;
 			case '3':
-				currentMap = 3;
 
+				currentMap = 3;
 				tileStr = "Now in map 3";
 				break;
 			case '4':
-				currentMap = 4;
 
+				currentMap = 4;
 				tileStr = "Now in map 4";
 				break;
-
-
-
-
+			case 'i':
+				//ammo
+				gunAmmo += 5;
+				tileStr = "Found some cells for that blaster.";
+				set_world_location(row, col, ' ');
+				break;
 			case 'A':
 				//alien ancounter
 				resetcolor();
@@ -500,7 +482,8 @@ int main() {
 				tileStr = "You kiled the alien!";
 				break;
 			case 'H':
-				tileStr = "CONGRATS! You found a health pack!";
+
+				tileStr = "You find a health pack.\nYou feel a bit better.";
 				if (HP < 100) {
 					HP += 25;
 					set_world_location(row, col, ' ');
