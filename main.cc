@@ -126,7 +126,7 @@ void die() {
 	cout << "BAD INPUT" << endl;
 	exit(1);
 }
-
+/*
 void alienBlaster (int& HP, int& enemyHP) {
 	clearscreen();
     show_cursor(true);
@@ -134,15 +134,33 @@ void alienBlaster (int& HP, int& enemyHP) {
    
 	while ((HP >= 0) && (enemyHP >= 0)) {
 		srand(time(NULL));
-   	    int rand1 = (rand() % 55) + 45;; 
-    	int rand2 = (rand() % 15) + 5;
+   	    int rand1 = (rand() % 40) + 20;; 
+    	int rand2 = (rand() % 30) + 10;
     	int alien_blaster = rand1;
     	int enemyDmg = rand2;
     	int newplayerDmg = alien_blaster;;
    	    int newenemyDmg = enemyDmg;
     	string action;
+	}
+}
+	*/    
+void Combat_mode (int& HP, int& enemyHP) {
 
-	     cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
+	clearscreen();
+    show_cursor(true);
+    set_raw_mode(false);
+
+	 while ((HP >= 0) && (enemyHP >= 0)) {
+		 srand(time(NULL));
+		int rand1 = (rand() % 40) + 20;;
+        int rand2 = (rand() % 30) + 10;
+        int alien_blaster = rand1;
+        int enemyDmg = rand2;
+        int newplayerDmg = alien_blaster;;
+        int newenemyDmg = enemyDmg;
+        string action;
+
+	    cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
         resetcolor();
 
         cout << "You strike the alien\n";
@@ -195,7 +213,7 @@ void alienBlaster (int& HP, int& enemyHP) {
     return;
 }
 
-
+/*
 void Baseball_bat (int &HP, int &enemyHP) {
 
     clearscreen();
@@ -204,77 +222,17 @@ void Baseball_bat (int &HP, int &enemyHP) {
 
     while ((HP > 0) && (enemyHP > 0)) {
         srand(time(NULL));
-        int rand1 = (rand() % 35) + 15;
-        int rand2 = (rand() % 30) + 15;
-        int bat  = rand1;
+        int rand1 = (rand() % 20) + 15;
+        int rand2 = (rand() % 15) + 10;
+        int alien_blaster  = rand1;
         int enemyDmg = rand2;
         int newplayerDmg = bat;
         int newenemyDmg = enemyDmg;
         int choice1;
         string action;
-
-         cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-        resetcolor();
-
-        cout << "You strike the alien\n";
-        newplayerDmg = bat; //holds the random value
-        enemyHP -= newplayerDmg;//player dmg affects alien hp
-        cout << "You do ";
-        cout << CYAN << bat;
-        resetcolor();
-        cout << " damage to the alien\n";
-        newplayerDmg = bat;// resets the random value to the deafault dmg
-        if (enemyHP <= 0) {
-        break;
-        }
-
-        cout << "The Alien Strikes\n";
-        newenemyDmg = enemyDmg;
-        HP -= newenemyDmg;
-         cout << "You take ";
-        cout << CYAN << newenemyDmg;
-        resetcolor();
-        cout << " damage\n";
-        resetcolor();
-        newenemyDmg = enemyDmg;
-		if (HP <= 0){
-        break;
-        }
-
-        cout << "Attempt to flee by pressing q: Or press any other key to keep fighting\n";
-        cin >> action;
-        if (action == "q"){
-        break;
-         }
-
- }
-
-       if (HP <= 0) {
-        cout << "YOU DIED \n";
-        cout << RED << "Aien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-        resetcolor();
-        exit(0);
-        }
-
-
-    if (enemyHP <= 0) {
-        cout << "You killed the Alien!\n";
-        cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-        resetcolor();
-        cout << "Back to exploring!" << endl;
-
-    }
-
-
-
-    resetcolor();
-    show_cursor(false);
-    set_raw_mode(true);
-    return;
+	}
 }
-
-   
-
+        
 
 void Melee (int &HP, int &enemyHP) {
 	
@@ -286,73 +244,15 @@ void Melee (int &HP, int &enemyHP) {
 		srand(time(NULL));
 	    int rand1 = (rand() % 20) + 10;
     	int rand2 = (rand() % 20) + 5;
-	    int Melee = rand1;
+	    int alien_blaster = rand1;
         int enemyDmg = rand2;
 	    int newplayerDmg = Melee;
         int newenemyDmg = enemyDmg;
         int choice1;
 		string action;
-	
-		 cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-    	resetcolor();
-
-        cout << "You strike the alien\n";
-        newplayerDmg = Melee; //holds the random value
-        enemyHP -= newplayerDmg;//player dmg affects alien hp
-        cout << "You do ";
-        cout << CYAN << Melee;
-        resetcolor();
-        cout << " damage to the alien\n";
-        newplayerDmg = Melee;// resets the random value to the deafault dmg
-		if (enemyHP <= 0) {
-		break;
-		}
-        
-		cout << "The Alien Strikes\n";
-        newenemyDmg = enemyDmg;
-		HP -= newenemyDmg;
-		 cout << "You take ";
-        cout << CYAN << newenemyDmg;
-        resetcolor();
-        cout << " damage\n";
-        resetcolor();
-        newenemyDmg = enemyDmg;
-		if (HP <= 0){
-		break;
-		}
-
-        cout << "Attempt to flee by pressing q: Or press any other key to keep fighting\n";
-        cin >> action;
-        if (action == "q"){
-		break;
-		 }
-		
 	}
-		
-       if (HP <= 0) {
-        cout << "YOU DIED \n";
-        cout << RED << "Aien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-        resetcolor();
-		exit(0);
-        }
-
-     
-	if (enemyHP <= 0) {
-        cout << "You killed the Alien!\n";
-        cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
-        resetcolor();
-        cout << "Back to exploring!" << endl;
-    
-	}
-	
-	
-
-	resetcolor();	
-    show_cursor(false);
-    set_raw_mode(true);
-	return;
 }
-
+*/
 
 int main() {
 	const int ROWS = world_map.size();
@@ -413,16 +313,17 @@ int main() {
             set_world_location(row, col, ' ');
 			
 			if (weapon == '1') {
-		    	Melee (HP, enemyHP);
+				Combat_mode (HP, enemyHP);
 			}
 			
 			if (weapon == '2') {
-			alienBlaster (HP, enemyHP);
+			Combat_mode(HP, enemyHP);
 			}	  
 
 			if (weapon == '3') {
-				Baseball_bat (HP, enemyHP);
+				Combat_mode(HP, enemyHP);
 			}
+
 
 		}
 		 
