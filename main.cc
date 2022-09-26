@@ -35,9 +35,9 @@ vector<string> world_map = {
 
 map_t map0 = {
 	{'*', '*', '*', '*', '*', '*', '*', '*', '*', '*'},
-	{'*', ' ', '*', 'F', ' ', 'i', ' ', '*', ' ', '1'},
+	{'*', ' ', '*', 'F', ' ', 'i', 'F', '*', ' ', '1'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', 'T', ' ', '*'},
-	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
+	{'*', 'B', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', ' ', '*', ' ', ' ', ' ', ' ', '*', ' ', '*'},
 	{'*', 'G', '*', ' ', ' ', 'H', ' ', '*', ' ', '*'},
@@ -112,7 +112,7 @@ void print_map(const map_t &map, int player_row, int player_col) {
 				case '4':
 					cout << CYAN;
 					break;
-				}
+				} 
 				//...and then draw that tile (then reset color)
 				cout << map.at(i).at(j) << " " << RESET;
 			}
@@ -205,30 +205,15 @@ void die() {
 	cout << "BAD INPUT" << endl;
 	exit(1);
 }
-/*
-void alienBlaster (int& HP, int& enemyHP) {
-	clearscreen();
-    show_cursor(true);
-    set_raw_mode(false);
 
-	while ((HP >= 0) && (enemyHP >= 0)) {
-		srand(time(NULL));
-   	    int rand1 = (rand() % 40) + 20;;
-    	int rand2 = (rand() % 30) + 10;
-    	int alien_blaster = rand1;
-    	int enemyDmg = rand2;
-    	int newplayerDmg = alien_blaster;;
-   	    int newenemyDmg = enemyDmg;
-    	string action;
-	}
-}
-	*/
-void Combat_mode(int& HP, int& enemyHP) {
+
+void Combat_mode(int& HP) {
 
 	clearscreen();
 	show_cursor(true);
 	set_raw_mode(false);
-
+	int enemyHP = 100;
+	
 	while ((HP >= 0) && (enemyHP >= 0)) {
 		srand(time(NULL));
 		int rand1 = (rand() % 40) + 20;;
@@ -278,13 +263,12 @@ void Combat_mode(int& HP, int& enemyHP) {
 		exit(0);
 	}
 
-	else if (enemyHP <= 0) {
+	if (enemyHP <= 0) {
 		cout << "You killed the alien!\n";
 		cout << RED << "Alien HP: " << enemyHP << WHITE <<  " | "  << GREEN << "Human HP " << HP <<  endl;
 		resetcolor();
 		cout << "Back to exploring!" << endl;
 	}
-
 
 	resetcolor();
 	show_cursor(false);
@@ -292,64 +276,22 @@ void Combat_mode(int& HP, int& enemyHP) {
 	return;
 }
 
-/*
-void Baseball_bat (int &HP, int &enemyHP) {
-
-    clearscreen();
-    show_cursor(true);
-    set_raw_mode(false);
-
-    while ((HP > 0) && (enemyHP > 0)) {
-        srand(time(NULL));
-        int rand1 = (rand() % 20) + 15;
-        int rand2 = (rand() % 15) + 10;
-        int alien_blaster  = rand1;
-        int enemyDmg = rand2;
-        int newplayerDmg = bat;
-        int newenemyDmg = enemyDmg;
-        int choice1;
-        string action;
-	}
-}
-
-
-void Melee (int &HP, int &enemyHP) {
-
-	clearscreen();
-    show_cursor(true);
-    set_raw_mode(false);
-
-    while ((HP > 0) && (enemyHP > 0)) {
-		srand(time(NULL));
-	    int rand1 = (rand() % 20) + 10;
-    	int rand2 = (rand() % 20) + 5;
-	    int alien_blaster = rand1;
-        int enemyDmg = rand2;
-	    int newplayerDmg = Melee;
-        int newenemyDmg = enemyDmg;
-        int choice1;
-		string action;
-	}
-}
-*/
 
 int main() {
 	const int FPS = 60;
 	int row = ROWS / 2, col = COLS / 2;
 	int last_row = -1, last_col = -1; //Save our last position so we only redraw on update
+	char weapon;
 	set_raw_mode(true);
 	show_cursor(false);
 
 	srand(time(NULL));
 	int HP = 100; //player health
-
+	int enemyHP = 100; // alien health
 	string tileStr = "default text";
 
 	row = 1;
 	col = 1;
-
-
-
 
 	while (true) {
 		tileStr = "default text";
@@ -380,39 +322,76 @@ int main() {
 				col = 8;
 				tileStr = "teleported to map 0!";
 				break;
-			case '1':
+			case '1': 
 				currentMap = 1;
 				row = 1;
 				col = 1;
 				tileStr = "teleported to map 1!";
 				break;
+			case 'F':
+		 set_world_location(row, col, ' ');
+			cout << YELLOW << "WARNING:";
+            resetcolor();
+            cout << " You have encoutered a Alien uh oh\n";
+            cout << "Chose your weapon to fight the alien!\n";
+            cout << "Enter 1) Melee" << endl;
+            cout << "Enter 2) Alien Blaster" << endl;
+            cout << "Enter 3) Baseball Bat" << endl;
+            cin >> weapon;
+            if (!cin) die();
+
+            if (weapon == '1') {
+                Combat_mode (HP);
+            }
+
+            if (weapon == '2') {
+            Combat_mode(HP);
+            }
+
+            if (weapon == '3') {
+                Combat_mode(HP);
 			}
+				break;
+		case 'H':
+			tileStr = "CONGRATS! You found a health pack!";
+			 if (HP < 100){
+            HP += 25;
+			 set_world_location(row, col, ' ');
+                }
+			 
+			 if (HP >= 100) {
+            tileStr =  "Health is already at maxed";
+             HP = 100;
+            }	
+				break;
+		case 'B': 
+			tileStr = "You picked up a baseball bat!";
+			   set_world_location(row, col, ' ');	
+	     		break;
 
-
-			/* dont put usleep on <-this-> line it'll cause usleep*/
+		case 'G':
+			tileStr = "You picked up a alien blaster!";
+			   set_world_location(row, col, ' ');	
+			break;
+		}
+			// dont put usleep on <-this-> line it'll cause usleep*/
 			print_map(theMaps.at(currentMap), row, col); //...redraw the map
 
 			last_row = row;
 			last_col = col;
 			movecursor(0, 0);
 			cout << CYAN  << "ROW: " << row << YELLOW << " COL: " << col << RESET << " MAP: " << currentMap;
+			cout << GREEN << " HP: " << HP <<"❤️ ";
+			resetcolor();
 			movecursor(ROWS + 3, 0);
 			cout << tileStr << endl;
 			cout.flush();
-
-
-
-
-
+			
 		}
 	}
 	set_raw_mode(false);
 	show_cursor(true);
 	movecursor(0, 0);
 	clearscreen();
-
-
-
-
 
 }
