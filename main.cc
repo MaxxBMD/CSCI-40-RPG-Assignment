@@ -167,7 +167,9 @@ void cutsceneTime(int cutsceneNum) {
 		cout << "The alarm message must be something about a power outage. You don’t take more than a couple seconds to decide you must seize this opportunity.\n";
 		cout << "You begin to walk toward the door that you presume leads you out of this prison.\n";
 		cout << endl << "Use the arrow keys to reach the door and escape.\n";
-		sleep(2);
+		int x = 0;
+		cin >> x;
+		//sleep(2);
 	}
 
 	else if (cutsceneNum == 2) {
