@@ -260,8 +260,13 @@ void Combat_mode(int& HP) {
 		cout << "What will you do?\nMELEE - 1\t RANGED(" << gunAmmo <<  ") - 2" << endl;
 		usleep(100000);
 
+
+		cin.clear();
+
 		char playerChoice = '0';
-		cin >> playerChoice;
+		cin >> playerChoice; //this is not working1!
+//		getline(cin, playerChoice);
+
 
 		cout << playerChoice << endl;
 
